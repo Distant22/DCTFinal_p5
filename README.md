@@ -1,4 +1,7 @@
-# 操作方式
+# 安裝說明
+npm install express nodemon cors firebase firebase-admin multer multer-firebase-storage firebase-functions @google-cloud/storage
+
+# 執行過程
 目前本專案僅包含前端程式!
 
 前端：（執行在 port 3000）
