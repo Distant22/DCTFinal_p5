@@ -1,3 +1,14 @@
+# 操作方式
+目前本專案僅包含前端程式!
+
+前端：（執行在 port 3000）
+    
+    npm start
+
+後端：（執行在 port 5000）
+
+    nodemon index.js
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
