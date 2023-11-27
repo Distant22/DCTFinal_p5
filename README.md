@@ -2,15 +2,17 @@
 npm install express nodemon cors firebase firebase-admin multer multer-firebase-storage firebase-functions @google-cloud/storage
 
 # 執行過程
-目前本專案僅包含前端程式!
+前端程式在 src 資料夾內，後端程式在 server 資料夾內
+
+開 2 個終端機執行：
+
+後端：（執行在 port 5000）
+
+    nodemon server/server.js
 
 前端：（執行在 port 3000）
     
     npm start
-
-後端：（執行在 port 5000）
-
-    nodemon index.js
 
 # Getting Started with Create React App
 
