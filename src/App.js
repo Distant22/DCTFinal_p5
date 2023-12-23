@@ -1,123 +1,109 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/header';
+import Footer from './components/footer';
+import P5Sketch from './components/sketch';
 
 function App() {
-  const [selectFile1, setSelectFile1] = useState(null);
-  const [loading1, setLoading1] = useState(false);
-  const [message1, setMessage1] = useState('');
 
-  const [loadingPY, setLoadingPY] = useState(false);
-  const [messagePY, setMessagePY] = useState('');
-
-  const [loading2, setLoading2] = useState(false);
-  const [message2, setMessage2] = useState('');
-
-  useEffect(() => {
-    if (message1) {
-      const timer = setTimeout(() => {
-        setMessage1(''); // Clear the message after 3 seconds
-      }, 3000);
-
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  const [options] = useState([
+    {
+      problem: '請問你現在的心情如何？',
+      choices: ["開心", "難過", "生氣", "沒有情緒"],
+    },
+    {
+      problem: '你最喜歡的季節是什麼？',
+      choices: ["春天", "夏天", "秋天", "冬天"],
+    },
+    {
+      problem: '如果你能夠實現一個願望，你會想許什麼？',
+      choices: ["財富自由", "一生平安", "事業成功", "活得自在"],
+    },
+    {
+      problem: '屬於你的建築物是：',
+      choices: []
     }
-  }, [message1]);
+  ]);
 
-  useEffect(() => {
-    if (messagePY) {
-      const timer = setTimeout(() => {
-        setMessage2(''); // Clear the message after 3 seconds
-      }, 3000);
+  const [choice, setChoice] = useState("");
+  const [count, setCount] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState([...options[count].choices]);
+  const [submitted, setSubmitted] = useState(false);
+  const [alert, setAlert] = useState(false);
 
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  const handleOptionClick = (val) => {
+    if (!submitted) {
+      setSelectedOptions([...selectedOptions]);
+      setChoice(val)
     }
-  }, [messagePY]);
+  };
 
-  useEffect(() => {
-    if (message2) {
-      const timer = setTimeout(() => {
-        setMessage2(''); // Clear the message after 3 seconds
-      }, 3000);
+  const handleSubmit = () => {
 
-      return () => clearTimeout(timer); // Cleanup the timer on component unmount
+    if (choice === "" &&  count + 1 < options.length) {
+
+      setAlert(true)
+    
+    } else if (!submitted) {
+
+      setAlert(false)
+      setSubmitted(true);
+      setCount(prevCount => (count + 1 < options.length) ? prevCount + 1 : 0 ); // Increment count using a function
+      if (count + 1 < options.length) {
+        setSelectedOptions([...options[count + 1].choices]);
+      } else {
+        setSelectedOptions([...options[0].choices]);
+      }
+      setSubmitted(false);
+      setChoice("")
     }
-  }, [message2]);
-
-  const handleFileInput1 = (event) => {
-    setSelectFile1(event.target.files[0]);
+    console.log("You set submit to", submitted);
   };
-
-  const handleUpload1 = () => {
-    const formData = new FormData();
-    formData.append('music', selectFile1);
-    setLoading1(true);
-    fetch('http://localhost:5000/upload', {
-      method: 'POST',
-      body: formData,
-    }).then(res => res.json()).then(result => {
-      setLoading1(false);
-      setMessage1(result.message);
-      console.log(result);
-    })
-  };
-
-  const handleExecuteMainPY = () => {
-    setLoadingPY(true);
-    fetch('http://localhost:5000/execute-main-py', {
-      method: 'POST',
-    }).then(res => res.json()).then(result => {
-      setLoadingPY(false);
-      setMessagePY(result.message);
-      console.log(result);
-    })
-  };
-
-  const handleUpload2 = () => {
-    setLoading2(true);
-    fetch('http://localhost:5000/upload-local-file', {
-      method: 'POST',
-    }).then(res => res.json()).then(result => {
-      setLoading2(false);
-      setMessage2(result.message);
-      console.log(result);
-    })
-  };
-
-  // The rest of your useEffect and return statements remain unchanged
 
   return (
-    <div className="bg-[#f7f5f5]">
-      <div className="flex justify-center items-center h-screen">
-        {/* First file upload section */}
-        <div className="w-full max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
-          <h1 className="text-xl font-bold mb-4">選擇音檔並上傳</h1>
-          <label>
-            <input type='file' onChange={handleFileInput1}></input>
-          </label>
-          <button onClick={handleUpload1} className='bg-green-700 text-white font-bold py-2 px-4 rounded'>
-            {
-              loading1 ? "Wait" : "Upload"
+    <div className="flex flex-col min-h-screen max-h-screen overflow-y-hidden font-serif">
+      <Header />
+      <div className={`duration-700 flex-1 p-12 m-6 rounded-xl font-bold flex`}>
+        <div className={`opacity-80 w-full flex-1 flex-col items-center justify-center p-2`}>
+          <div className={`pl-4 text-2xl space-y-4 flex flex-col w-full overflow-y-hidden ${ selectedOptions.length > 0 ? "items-start" : "items-center justify-center h-full" }`}>
+            <p>{options[count].problem}</p>
+            { selectedOptions.length > 0 ? <></> : 
+            <>
+              <p className="text-sm">（尚未完成，僅測試可連上 p5）</p>
+              <P5Sketch className="duration-700 " userInput={150} />
+              <button
+                className="py-2 px-6 text-lg bg-black rounded-md text-white active:bg-yellow-300 active:text-black bg-black"
+                onClick={handleSubmit}
+              >
+                回首頁
+              </button> 
+            </>
             }
-          </button>
-          {message1 && <p className="text-green-600 mt-2">{message1}</p>}
-        </div>
-
-        {/* Second file upload section */}
-        <div className="w-full max-w-md mx-auto bg-white p-8 rounded-md shadow-md flex flex-col items-center">
-          <h1 className="text-xl font-bold mb-4">上傳生成式音樂</h1>
-          <button onClick={handleExecuteMainPY} className='bg-teal-400 text-white font-bold py-2 px-4 rounded'>
-            {
-              loadingPY ? "正在生成…請稍後" : "生成音樂"
-            }
-          </button>
-          {messagePY && <p className="text-green-600 mt-2 mb-4">{messagePY}</p>}
-          <button onClick={handleUpload2} className='bg-green-700 text-white font-bold py-2 px-4 rounded mt-4'>
-            {
-              loading2 ? "正在上傳…請稍後" : "上傳至資料庫"
-            }
-          </button>
-          {message2 && <p className="text-green-600 mt-2">{message2}</p>}
+          </div>
+          <div className="mt-4 flex flex-col">
+            {selectedOptions.map((val, index) => (
+              <button
+                key={index}
+                className={`m-2 px-48 py-6 duration-500 rounded-md hover:bg-gray-300 focus:(bg-gradient-to-r from-purple-300 to-blue-400) hover:text-black
+                ${choice === val ? 'bg-gradient-to-r from-purple-300 to-blue-400  text-black opacity-100' : 'bg-gray-800 text-white opacity-100'}`}
+                onClick={() => handleOptionClick(val)}
+              >
+                {val}
+              </button>
+            ))}
+          </div>
+          <div className="m-4 flex justify-end w-full items-center">
+            { (alert && selectedOptions.length > 0) ? <p className="text-red-600 h-full pr-4">記得選擇選項！</p> : <></>}
+            { selectedOptions.length > 0 ? <button
+              className={`duration-300 py-4 px-16 mr-8 rounded-md text-white active:bg-yellow-300 active:text-black hover:text-black hover:bg-yellow-300 bg-gray-800 text-white`}
+              onClick={handleSubmit}
+            >
+              送出
+            </button> : 
+            <></>}
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
