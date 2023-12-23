@@ -60,18 +60,17 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen max-h-screen overflow-y-hidden font-serif">
+    <div className="flex flex-col h-screen overflow-y-hidden font-serif">
       <Header />
-      <div className={`duration-700 flex-1 p-12 m-6 rounded-xl font-bold flex`}>
-        <div className={`opacity-80 w-full flex-1 flex-col items-center justify-center p-2`}>
-          <div className={`pl-4 text-2xl space-y-4 flex flex-col w-full overflow-y-hidden ${ selectedOptions.length > 0 ? "items-start" : "items-center justify-center h-full" }`}>
+      <div className={`duration-700 h-[70%] p-2 mx-2 rounded-xl font-bold flex flex-col items-center justify-center`}>
+          <div className={`text-lg py-4 space-y-3 flex flex-col w-full ${ selectedOptions.length > 0 ? "items-start pl-4" : "items-center justify-center h-full " }`}>
             <p>{options[count].problem}</p>
             { selectedOptions.length > 0 ? <></> : 
             <>
               <p className="text-sm">（尚未完成，僅測試可連上 p5）</p>
-              <P5Sketch className="duration-700 " userInput={150} />
+              <P5Sketch userInput={150} />
               <button
-                className="py-2 px-6 text-lg bg-black rounded-md text-white active:bg-yellow-300 active:text-black bg-black"
+                className="w-24 h-12 text-lg bg-black rounded-md text-white active:bg-yellow-300 active:text-black bg-black"
                 onClick={handleSubmit}
               >
                 回首頁
@@ -79,11 +78,11 @@ function App() {
             </>
             }
           </div>
-          <div className="mt-4 flex flex-col">
+          <div className={`flex flex-col space-y-3 w-full ${ selectedOptions.length > 0 ? "h-[80%] m-4" : "h-[0%]" }`}>
             {selectedOptions.map((val, index) => (
               <button
                 key={index}
-                className={`m-2 px-48 py-6 duration-500 rounded-md hover:bg-gray-300 focus:(bg-gradient-to-r from-purple-300 to-blue-400) hover:text-black
+                className={`w-[100%] h-[30%]  duration-500 rounded-md hover:bg-gray-300 focus:(bg-gradient-to-r from-purple-300 to-blue-400) hover:text-black
                 ${choice === val ? 'bg-gradient-to-r from-purple-300 to-blue-400  text-black opacity-100' : 'bg-gray-800 text-white opacity-100'}`}
                 onClick={() => handleOptionClick(val)}
               >
@@ -91,17 +90,16 @@ function App() {
               </button>
             ))}
           </div>
-          <div className="m-4 flex justify-end w-full items-center">
-            { (alert && selectedOptions.length > 0) ? <p className="text-red-600 h-full pr-4">記得選擇選項！</p> : <></>}
+          <div className={`flex justify-end w-full items-center ${ selectedOptions.length > 0 ? "h-[20%] m-4" : "h-[0%]" }`}>
+            { (alert && selectedOptions.length > 0) ? <p className="text-red-600 h-full pr-4 flex items-center">記得選擇選項！</p> : <></>}
             { selectedOptions.length > 0 ? <button
-              className={`duration-300 py-4 px-16 mr-8 rounded-md text-white active:bg-yellow-300 active:text-black hover:text-black hover:bg-yellow-300 bg-gray-800 text-white`}
+              className={`h-[70%] w-[50%] duration-300 rounded-md text-white active:bg-yellow-300 active:text-black hover:text-black hover:bg-yellow-300 bg-gray-800 text-white`}
               onClick={handleSubmit}
             >
               送出
             </button> : 
             <></>}
           </div>
-        </div>
       </div>
       <Footer />
     </div>
