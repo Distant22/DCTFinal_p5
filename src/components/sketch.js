@@ -1,24 +1,22 @@
 import React from 'react';
 import Sketch from 'react-p5';
+import meme from '../meme.png'
 
 function P5Sketch({ userInput }) {
+
+    let img;
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(300, 300).parent(canvasParentRef);
         p5.background(255, 255, 255);
+        img = p5.createImg(meme)
+        img.hide()
     }
 
     const draw = (p5) => {
-        p5.fill(p5.color(
-            170+Math.floor(Math.random() * 50),
-            170+Math.floor(Math.random() * 50),
-            170+Math.floor(Math.random() * 50)
-        ));
-        p5.ellipse(
-            Math.floor(Math.random() * 300),
-            Math.floor(Math.random() * 300),
-            userInput/3+Math.floor(Math.random() * 10)
-        );
+        let x = (Math.random() * 200)
+        let y = (Math.random() * 200)
+        p5.image(img, x,y,x + 50, y + 50)
     }
 
     return (
