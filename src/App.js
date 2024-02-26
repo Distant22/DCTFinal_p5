@@ -7,7 +7,7 @@ function App() {
 
   const [options] = useState([
     {
-      problem: '請問你現在的心情如何？',
+      problem: 'Joe 更新進度',
       choices: ["開心", "難過", "生氣", "沒有情緒"],
     },
     {
