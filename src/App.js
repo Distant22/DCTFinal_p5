@@ -2,21 +2,32 @@ import React, { useState } from 'react';
 import Header from './components/header';
 import Footer from './components/footer';
 import P5Sketch from './components/sketch';
+import Login from './components/login';
 
 function App() {
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [options] = useState([
     {
-      problem: 'Joe 更新進度',
-      choices: ["開心", "難過", "生氣", "沒有情緒"],
+      problem: '1. 在一個悠閒的一天，你花費多少時間在網路上閱讀新聞或使用社群媒體？',
+      choices: ["A. 小於 30 分鐘", "B. 30 分鐘至 1 小時", "C. 1 小時至 2 小時", "D. 2 小時以上"],
     },
     {
-      problem: '你最喜歡的季節是什麼？',
-      choices: ["春天", "夏天", "秋天", "冬天"],
+      problem: '2. 你在網路上參與討論或留言的頻率？',
+      choices: ["A. 從不", "B. 偶爾", "C. 經常", "D. 總是"],
     },
     {
-      problem: '如果你能夠實現一個願望，你會想許什麼？',
-      choices: ["財富自由", "一生平安", "事業成功", "活得自在"],
+      problem: '3. 當你在網路上看到有爭議性的新聞或意見時，你的第一反應是？',
+      choices: ["A. 不太在意，直接忽略", "B. 覺得有趣，想深入了解", "C. 覺得有點擔憂，但不一定相信", "D. 非常擔憂，立刻分享或評論"],
+    },
+    {
+      problem: '4. 你曾因為在網路上看到的資訊改變過自己的觀點嗎？',
+      choices: ["A. 不確定", "B. 是的，多次", "C. 是的，偶爾", "D. 不曾改變過"],
+    },
+    {
+      problem: '5. 當你在網路上看到與自己觀點相左的言論時，你的反應是？',
+      choices: ["A. 忽略並捲動頁面", "B. 嘗試理解對方觀點", "C. 感到憤怒或不悅", "D. 回擊或發表相對立的言論"],
     },
     {
       problem: '屬於你的建築物是：',
@@ -52,9 +63,11 @@ function App() {
         setSelectedOptions([...options[count + 1].choices]);
       } else {
         setSelectedOptions([...options[0].choices]);
+        setIsAuthenticated(false); // go back to the login page
       }
       setSubmitted(false);
-      setChoice("")
+      setChoice("");
+      
     }
     console.log("You set submit to", submitted);
   };
@@ -62,7 +75,10 @@ function App() {
   return (
     <div className="flex flex-col h-screen overflow-y-hidden font-serif">
       <Header />
-      <div className={`duration-700 h-[70%] p-2 mx-2 rounded-xl font-bold flex flex-col items-center justify-center`}>
+
+      {/* Conditionally render either the Login component or the existing questionnaire component */}
+      {isAuthenticated ? (
+        <div className={`duration-700 h-[70%] p-2 mx-2 rounded-xl font-bold flex flex-col items-center justify-center`}>
           <div className={`text-lg py-4 space-y-3 flex flex-col w-full ${ selectedOptions.length > 0 ? "items-start pl-4" : "items-center justify-center h-full " }`}>
             <p>{options[count].problem}</p>
             { selectedOptions.length > 0 ? <></> : 
@@ -100,7 +116,11 @@ function App() {
             </button> : 
             <></>}
           </div>
-      </div>
+        </div>
+      ) : (
+        <Login setIsAuthenticated={setIsAuthenticated} />
+      )}
+
       <Footer />
     </div>
   );
