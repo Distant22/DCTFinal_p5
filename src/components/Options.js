@@ -6,6 +6,8 @@ function Options({ options, onChooseOption, onResult }) {
     const [choice, setChoice] = useState("");
     const [count, setCount] = useState(0);
     const [selectedOptions, setSelectedOptions] = useState([...options[count].choices]);
+
+    const [animation, setAnimation] = useState(false)
     
     const handleOptionClick = (val) => {
         setSelectedOptions([...selectedOptions]);
@@ -16,29 +18,42 @@ function Options({ options, onChooseOption, onResult }) {
         if (choice === "") {
             setAlert(true);
         } else {
-            setAlert(false);
-            onChooseOption(options[count].value[choice])
-            setCount(prevCount => (count + 1 < options.length) ? prevCount + 1 : 0);
-            if (options[count + 1].choices.length === 0){
-                onResult(true)
-            } else {
-                setSelectedOptions([...options[count + 1].choices]);
-            }
-            setChoice("");
+
+            setAnimation(true)
+
+            setTimeout(() => {
+
+                setAnimation(false)
+                setAlert(false);
+                onChooseOption(options[count].value[choice])
+                setCount(prevCount => (count + 1 < options.length) ? prevCount + 1 : 0);
+                if (options[count + 1].choices.length === 0){
+                    onResult(true)
+                } else {
+                    setSelectedOptions([...options[count + 1].choices]);
+                }
+                setChoice("");
+
+            }, 1200);
+            
         }        
     };
 
     return (
         <>
-        <div className={`text-lg py-4 space-y-3 flex flex-col w-full ${selectedOptions.length > 0 ? "items-start pl-4" : "items-center justify-center h-full "}`}>
+        <div className={`text-lg py-4 space-y-3 flex flex-col w-full ${selectedOptions.length > 0 ? "items-start pl-4" : "items-center justify-center h-full "}
+        ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'} 
+        `}>
             <p>{options[count].problem}</p>
         </div>
         <div className={`flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[80%] m-4" : "h-[0%]"}`}>
             {selectedOptions.map((val, index) => (
             <button
                 key={index}
-                className={`w-[100%] h-[30%] duration-500 rounded-md hover:bg-gray-300 focus:(bg-gradient-to-r from-purple-300 to-blue-400) hover:text-black
-                ${choice === index ? 'bg-gradient-to-r from-purple-300 to-blue-400  text-black opacity-100' : 'bg-gray-800 text-white opacity-100'}`}
+                className={`w-[100%] h-[30%] rounded-md hover:text-black hover:bg-gray-300
+                ${choice === index ? 'bg-gradient-to-r from-purple-300 to-blue-400  text-black' : 'bg-gray-800 text-white'}
+                ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'}
+                `}
                 onClick={() => handleOptionClick(index)}
             >
                 {val}

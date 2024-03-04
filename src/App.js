@@ -5,7 +5,6 @@ import NameInput from './components/name';
 import Options from './components/Options';
 import optionData from './options/option.json';
 import P5Sketch from './components/sketch';
-import Login from './components/login';
 
 function App() {
   

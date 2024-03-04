@@ -14,21 +14,26 @@ function NameInput({ onNameSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-[75%] w-full">
-      <p className="h-[10%]"></p>
-      <div className="flex items-center justify-center w-full h-[20%] ">
-        請輸入你的名字：
-      </div>
-      <input 
-        type="text" 
+    <div className="flex flex-col h-screen items-center justify-start">
+      <p className="flex h-[30%] w-full"></p>
+      <h1 className="text-3xl font-bold mb-4">網路生態城</h1>
+      <input
+        type="text"
+        placeholder="請輸入你的暱稱"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="rounded-full w-[60%] h-[15%] p-4 shadow-lg bg-gray-600 text-gray-50" />
-      <p className="h-[20%]"></p>
-      <button onClick={handleSubmit} className="rounded-full bg-gray-600 text-gray-50 h-[12%] w-[40%] shadow-lg">送出</button>
+        className="mb-2 p-2 border rounded"
+      />
+      <button
+        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+        onClick={handleSubmit}
+      >
+        登入
+      </button>
       {error && <p className="h-[15%] text-gray-600 flex items-center justify-center">請輸入名字！</p>}
     </div>
   );
+
 }
 
 export default NameInput;
