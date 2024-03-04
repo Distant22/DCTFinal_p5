@@ -58,6 +58,7 @@ function P5Sketch({ userInput }) {
         p5.background(bg);
         for(let x = 0; x < 6; x++){
             for(let y = 0; y < 4; y++){
+                console.log("x : ", x , " y : ", y)
                 p5.image(architecture[randomChoice[x][y]], width[x], height[y], 80, 80);
             } 
         }
