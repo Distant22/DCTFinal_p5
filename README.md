@@ -1,5 +1,10 @@
 README 改寫
 
+# 操作說明
+以 .env-example 為範本，更新 Firebase 密鑰資訊並存成 .env
+開啟終端機，在主目錄下執行 npm start
+
+
 # 安裝說明
 首先，Python 版本必須為 3.9
 
