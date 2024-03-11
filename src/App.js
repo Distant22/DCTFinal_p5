@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './components/header';
 import Footer from './components/footer';
 import NameInput from './components/name';
@@ -8,6 +8,7 @@ import P5Sketch from './components/sketch';
 
 function App() {
   
+  const [imageUrl, setImageUrl] = useState('');
   const [options] = useState(optionData);
   const [result, setResult] = useState(false);
 
@@ -29,41 +30,54 @@ function App() {
     setUser({...user, score: user.score + val});
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const sendData = async () => {
+  const handleUpload = async () => {
+    try {
+      return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch('http://0.0.0.0:8000/draw', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "name": user.name,
-              "score": user.score
-            })
-          });
+          const imgId = v4();
+          const imgRef = ref(imgDB, `Imgs/${imgId}`);
+ 
+          const response = await fetch(localImage);
+          const blob = await response.blob();
   
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
+          const uploadTaskSnapshot = await uploadBytes(imgRef, blob);
+          const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+
+          resolve(downloadURL);
   
-          const data = await response.json();
-          console.log('Success:', data);
         } catch (error) {
-          console.error('There was a problem with your fetch operation:', error);
+          reject(error);
+          console.error('Error uploading image:', error.message);
         }
-      };
-  
-      if (result) {
-        await sendData();
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const saveUserData = async () => {
+      try {
+        const downloadURL = await handleUpload();
+        const docRef = await addDoc(collection(txtDB, 'users'), {...user, imgUrl: downloadURL});
+        console.log('Document ID:', docRef.id);
+        await getImageUrl();
+
+      } catch (error) {
+          console.error('Error adding user data:', error);
       }
-    };
-  
-    fetchData();
-  }, [result, user.name, user.score]);
-  
-  
+  };
+      
+
+  const getImageUrl = async () => {
+    try {
+      const imgRef = ref(imgDB, `Imgs/apple.jpg`);
+      const url = await getDownloadURL(imgRef);
+      setImageUrl(url);
+    } catch (error) {
+      console.error('Error getting image:', error);
+    }
+  };
+
 
   return (
     <div className="flex flex-col h-screen overflow-y-hidden font-serif">
@@ -75,7 +89,9 @@ function App() {
             {result ? 
               <>
                 <p className="text-sm"> 使用者 {user.name} 的分數是 {user.score}</p>
-                <P5Sketch userInput={150} />
+                {/* <P5Sketch userInput={150} /> */}
+                {imageUrl && <img src={imageUrl} alt="Image" />}
+                <button onClick={saveUserData}>儲存結果</button>
               </> : <>  
                   <Options options={options} onChooseOption={handleAddScore} onResult={handleResult} />
               </>
