@@ -14,8 +14,8 @@ function NameInput({ onNameSubmit }) {
   };
 
   return (
-    <div className="flex flex-col h-screen items-center justify-start">
-      <p className="flex h-[30%] w-full"></p>
+    <div className="flex flex-col h-screen items-center justify-start space-y-6">
+      <p className="flex h-[15%] w-full"></p>
       <h1 className="text-3xl font-bold mb-4">網路生態城</h1>
       <input
         type="text"
@@ -25,10 +25,10 @@ function NameInput({ onNameSubmit }) {
         className="mb-2 p-2 border rounded"
       />
       <button
-        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+        className="bg-[#9fd0d6] duration-500 text-gray-700 p-2 rounded hover:bg-gray-700 hover:text-white w-[40%]"
         onClick={handleSubmit}
       >
-        登入
+        進入測驗
       </button>
       {error && <p className="h-[15%] text-gray-600 flex items-center justify-center">請輸入名字！</p>}
     </div>

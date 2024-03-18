@@ -17,13 +17,14 @@ function P5Sketch({ userInput }) {
     let randomChoice = [];
     let bg;
 
-    let width = [10,140,270,400,530,660]
-    let height = [10,110,210,310]
+    let width = [10,140,270,400,530,660,790,910]
+    let height = [10,110,210,310,410,510,610,710]
 
     let ranX = []
 
     const setup = (p5, canvasParentRef) => {
-        p5.createCanvas(800, 400).parent(canvasParentRef);
+        console.log(background, typeof(background))
+        p5.createCanvas(1000, 800).parent(canvasParentRef);
         bg = p5.loadImage(background)
         bankImg = p5.loadImage(bank);
         p5.append(architecture, bankImg);
@@ -42,23 +43,19 @@ function P5Sketch({ userInput }) {
         templeImg = p5.loadImage(temple);
         p5.append(architecture, templeImg);
 
-        for(let x = 0; x < 6; x++){
+        for(let x = 0; x < 8; x++){
             p5.append(ranX, 10*Math.round(p5.random(0,6)));
             randomChoice[x] = []; // create nested array
-            for(let y = 0; y < 4; y++){
+            for(let y = 0; y < 8; y++){
                 randomChoice[x][y] = Math.round(p5.random(0,9));                
             } 
         }
-        console.log(ranX)
-        console.log(randomChoice);
     }
 
-    const draw = (p5) => {
-        
+    const draw = (p5) => { 
         p5.background(bg);
-        for(let x = 0; x < 6; x++){
-            for(let y = 0; y < 4; y++){
-                console.log("x : ", x , " y : ", y)
+        for(let x = 0; x < 8; x++){
+            for(let y = 0; y < 8; y++){
                 p5.image(architecture[randomChoice[x][y]], width[x], height[y], 80, 80);
             } 
         }
