@@ -1,13 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ReactP5Wrapper } from "@p5-wrapper/react";
-import { ref, getDownloadURL } from "firebase/storage";
 import { collection, limit, query, getDocs, orderBy } from "firebase/firestore";
 import { imgDB, txtDB } from "../firebase";
+import { ref, getDownloadURL } from "firebase/storage";
+import hopelessAudio from '../music/hopeless.wav';
+import sadAudio from '../music/sad.wav';
+import collapseAudio from '../music/collapse.wav';
+import suicideAudio from '../music/suicide.wav';
+import depressionAudio from '../music/depression.wav';
+import mildAudio from '../music/mild.wav';
+import satisfyAudio from '../music/satisfy.wav';
+import yesAudio from '../music/yes.wav';
+import sunnyAudio from '../music/sunny.wav';
+import cheerAudio from '../music/cheer.wav';
+import happyAudio from '../music/happy.wav';
 
 function Test() {
     const [result, setResult] = useState(false);
     const [cities, setCities] = useState([])
     const [username, setUsername] = useState([])
+    const audioRef = useRef(null);
+    const [highestMusicName, setHighestMusicName] = useState("");
+    const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
+    const allAudioName = ['hopeless','sad','collapse','suicide','depression','mild','satisfy','yes','sunny','cheer','happy'];
+
     
     useEffect(() => {
 
@@ -40,8 +56,34 @@ function Test() {
             setResult(true);
         };
         fetchResults();
+        fetchHighestCountMusic();
     }, []);
     
+    const getAudioSource = () => {   
+        const highestMusicIndex = allAudioName.indexOf(highestMusicName);
+        console.log(highestMusicName, highestMusicIndex);
+        console.log(allAudio[highestMusicIndex]);
+        return allAudio[highestMusicIndex];
+      };
+
+    const fetchHighestCountMusic = async () => {
+        try {
+          const musicRef = collection(txtDB, 'music');
+          const querySnapshot = await getDocs(query(musicRef, orderBy('time', 'desc'), limit(1)));
+      
+          // Check if any documents exist
+          if (!querySnapshot.empty) {
+            const highestCountMusic = querySnapshot.docs[0];
+            const musicName = highestCountMusic.id; // Get the ID of the document, which represents the music name
+            console.log('The music with the highest count is:', musicName);
+            setHighestMusicName(musicName);
+          } else {
+            console.log('No music found in the collection.');
+          }
+        } catch (error) {
+          console.error('Error fetching highest count music:', error);
+        }
+      };
 
     let p5_city = []
     let x = -500;
@@ -79,11 +121,21 @@ function Test() {
         };
     }
 
+    const handleAudioPlayback = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
+
     return (
-        <div className="items-center justify-center flex bg-blue-50 h-screen w-screen">
+        <div className="items-center justify-center flex bg-blue-50 h-screen w-screen"> 
             {result ? (
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center" onClick={handleAudioPlayback}>
                     <ReactP5Wrapper sketch={sketch} />
+                    <audio ref={audioRef} loop>
+                        <source src={getAudioSource()} type="audio/wav" />
+                        Your browser does not support the audio element.
+                    </audio> 
                 </div>
             ) : (
                 <div className="flex items-center justify-center">
