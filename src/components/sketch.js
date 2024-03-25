@@ -10,7 +10,7 @@ import residence from '../buildings/residence.png'
 import school from '../buildings/school.png'
 import temple from '../buildings/temple.png'
 
-function P5Sketch({ userInput }) {
+function P5Sketch() {
 
     let bankImg, churchImg, factoryImg, hamburgerImg, parkImg, residenceImg, schoolImg, templeImg;
     let architecture = [];

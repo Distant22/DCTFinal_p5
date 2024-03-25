@@ -29,7 +29,7 @@ function Test() {
 
         const fetchResults = async () => {
             const querySnapshot = await getDocs(
-                query(collection(txtDB, "users"), orderBy("uploadTime", "desc"), limit(3))
+                query(collection(txtDB, "users"), orderBy("uploadTime", "desc"), limit(100))
             );
             const cities = [];
             const username = [];
@@ -116,7 +116,7 @@ function Test() {
                 temp_y = y + 100 * Math.floor(i / 10);
                 p5.image(p5_city[i], temp_x, temp_y, 100, 100)
                 p5.textFont(font);
-                p5.text(username[i], temp_x+40, temp_y+125, 100, 100)
+                p5.text(username[i], temp_x+50-(username[i].length*3.25), temp_y+125, 100, 100)
             }
         };
     }

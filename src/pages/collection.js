@@ -17,7 +17,7 @@ function Collection() {
       <div className={`h-[70%] p-2 mx-2 rounded-xl font-bold flex flex-col items-center justify-center`}>
         {result ? 
           <>
-            <P5Sketch userInput={150} />
+            <P5Sketch />
           </> : <>  
               載入結果中...
           </>

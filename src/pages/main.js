@@ -28,7 +28,6 @@ function Main() {
   const [options] = useState(optionData);
   const [result, setResult] = useState(false);
   const [waiting, setWaiting] = useState(true);
-  var img_list = ['bank-green','hamburger-blue','residence-brown','temple-origin']
   const audioRef = useRef(null);
 
   const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
@@ -51,14 +50,17 @@ function Main() {
     setResult(val)
   }
 
+  var img_list = ['bank-green','hamburger-blue','residence-brown','temple-origin']
+
   const handleUpdateUser = (val) => {
     var new_score = user.score + val
     console.log("Updated - score = ",user.score)
     console.log("Image Type - ",(new_score/100))
+    // imgType: img_list[(new_score/100)-1]
     setUser({...user, 
       score: new_score, 
       uploadTime: serverTimestamp(),
-      imgType: img_list[(new_score/100)-1]
+      imgType: img_list[1]
     });
   }
 
@@ -116,16 +118,6 @@ function Main() {
       }
     };
   }, []);
-
-  const getImageUrl = async () => {
-    try {
-      const imgRef = ref(imgDB, `Imgs/apple.jpg`);
-      const url = await getDownloadURL(imgRef);
-      setImageUrl(url);
-    } catch (error) {
-      console.error('Error getting image:', error);
-    }
-  };
 
   // Determine which audio to play based on the score
   const getAudioSource = () => {
