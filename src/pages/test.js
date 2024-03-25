@@ -100,7 +100,7 @@ function Test() {
         
         p5.preload = () => {
             setTimeout(() => {
-                font = p5.loadFont("./OpenSans-Bold.ttf");
+                font = p5.loadFont("./NotoSansTC-Bold.ttf");
                 console.log("Preload called")
                 for (let i = 0; i < cities.length; i++) {
                     p5.append(p5_city,p5.loadImage(cities[i]))
@@ -145,6 +145,7 @@ function Test() {
         </div>
     );
 }
+
 
 export default Test;
 
