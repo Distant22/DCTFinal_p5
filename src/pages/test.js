@@ -90,7 +90,8 @@ function Test() {
     let y = -400;
     let temp_x = 0
     let temp_y = 0;
-    let font;
+    let fontRegular;
+    let fontEmoji;
 
     function sketch(p5) {
         p5.setup = () => {
@@ -100,7 +101,8 @@ function Test() {
         
         p5.preload = () => {
             setTimeout(() => {
-                font = p5.loadFont("./NotoSansTC-Bold.ttf");
+                fontRegular = p5.loadFont("./NotoSansTC-Bold.ttf");
+                fontEmoji = p5.loadFont("./NotoEmoji-Bold.ttf");
                 console.log("Preload called")
                 for (let i = 0; i < cities.length; i++) {
                     p5.append(p5_city,p5.loadImage(cities[i]))
@@ -115,10 +117,24 @@ function Test() {
                 temp_x = x + 100 * (i % 10)
                 temp_y = y + 100 * Math.floor(i / 10);
                 p5.image(p5_city[i], temp_x, temp_y, 100, 100)
-                p5.textFont(font);
-                p5.text(username[i], temp_x+50-(username[i].length*3.25), temp_y+125, 100, 100)
+                let containsEmoji = containsEmojis(username[i]);
+                // Set the font based on whether username contains emojis
+                if (containsEmoji) {
+                    p5.textFont(fontEmoji);
+                } else {
+                    p5.textFont(fontRegular);
+                }
+                let textWidth = p5.textWidth(username[i]);
+                let textX = temp_x + 50 - textWidth / 2;
+                p5.text(username[i], textX, temp_y + 125, 100, 100);
             }
         };
+    }
+
+    function containsEmojis(str) {
+        // Regular expression to match emojis
+        let emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
+        return emojiRegex.test(str);
     }
 
     const handleAudioPlayback = () => {
