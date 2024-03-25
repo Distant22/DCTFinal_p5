@@ -22,10 +22,10 @@ function NameInput({ onNameSubmit }) {
         placeholder="請輸入你的暱稱"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="mb-2 p-2 border rounded"
+        className="mb-2 p-2 border rounded w-[70%]"
       />
       <button
-        className="bg-[#9fd0d6] duration-500 text-gray-700 p-2 rounded hover:bg-gray-700 hover:text-white w-[40%]"
+        className="bg-[#9fd0d6] duration-500 text-gray-700 p-2 rounded hover:bg-gray-700 hover:text-white w-[70%]"
         onClick={handleSubmit}
       >
         進入測驗

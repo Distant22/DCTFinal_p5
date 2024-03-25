@@ -4,11 +4,9 @@ import Footer from '../components/footer';
 import NameInput from '../components/name';
 import Options from '../components/Options';
 import optionData from '../options/option.json';
-import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import {ref, getDownloadURL} from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { imgDB, txtDB } from "../firebase";
-import { v4 } from "uuid";
-import localImage from '../buildings/banana-peel.png';
 import ReactLoading from 'react-loading';
 
 function Main() {
@@ -17,11 +15,14 @@ function Main() {
   const [options] = useState(optionData);
   const [result, setResult] = useState(false);
   const [waiting, setWaiting] = useState(true);
+  var img_list = ['bank-green','hamburger-blue','residence-brown','temple-origin']
 
   // 設定初始名稱
   const [user, setUser] = useState({
     name: "",
-    score: 0
+    score: 0,
+    uploadTime: null,
+    imgType: null
   })
 
   const handleNameSubmit = (val) => {
@@ -32,52 +33,46 @@ function Main() {
     setResult(val)
   }
 
-  const handleAddScore = (val) => {
-    setUser({...user, score: user.score + val});
+  const handleUpdateUser = (val) => {
+    var new_score = user.score + val
+    console.log("Updated - score = ",user.score)
+    console.log("Image Type - ",(new_score/100))
+    setUser({...user, 
+      score: new_score, 
+      uploadTime: serverTimestamp(),
+      imgType: img_list[(new_score/100)-1]
+    });
   }
 
-  const handleUpload = async () => {
-    try {
-      return new Promise(async (resolve, reject) => {
-        try {
-          const imgId = v4();
-          const imgRef = ref(imgDB, `Imgs/${imgId}`);
- 
-          const response = await fetch(localImage);
-          const blob = await response.blob();
-  
-          const uploadTaskSnapshot = await uploadBytes(imgRef, blob);
-          const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
-          resolve(downloadURL);
-  
-        } catch (error) {
-          reject(error);
-          console.error('Error uploading image:', error.message);
-        }
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
-
+  // 上傳資料到 Firebase
   useEffect(() => {
+
+    const getImageUrl = async () => {
+      try {
+        const imgRef = ref(imgDB, `${user.imgType}.png`);
+        const url = await getDownloadURL(imgRef);
+        setImageUrl(url);
+      } catch (error) {
+        console.error('Error getting image:', error);
+      }
+    };
+
     if (result) {
       const timeout = setTimeout( async () => {
           try {
-              const downloadURL = await handleUpload();
-              const docRef = await addDoc(collection(txtDB, 'users'), {...user, imgUrl: downloadURL});
+              console.log("上傳資料中...User is ",user)
+              const docRef = await addDoc(collection(txtDB, 'users'), {...user});
               console.log('Document ID:', docRef.id);
               await getImageUrl();
-      
             } catch (error) {
                 console.error('Error adding user data:', error);
             }
       }, 3000);
-
       return () => clearTimeout(timeout);
     } 
   }, [result, user]);
 
+  // 進入頁面前先等待幾秒跑動畫
   useEffect(() => {
     const waitBeforeRender = setTimeout(() => {
       setWaiting(false);
@@ -85,16 +80,6 @@ function Main() {
 
     return () => clearTimeout(waitBeforeRender);
   }, []);
-
-  const getImageUrl = async () => {
-    try {
-      const imgRef = ref(imgDB, `Imgs/apple.jpg`);
-      const url = await getDownloadURL(imgRef);
-      setImageUrl(url);
-    } catch (error) {
-      console.error('Error getting image:', error);
-    }
-  };
 
 
   return (
@@ -119,7 +104,7 @@ function Main() {
                   {imageUrl ? <img src={imageUrl} alt="" /> : <>載入結果中...</>}                
                 </> : 
                 <>  
-                  <Options options={options} onChooseOption={handleAddScore} onResult={handleResult} />
+                  <Options options={options} onChooseOption={handleUpdateUser} onResult={handleResult} />
                 </>
               }
             </>
