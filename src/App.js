@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Main from './pages/main';
 import Collection from './pages/collection';
-import Test from './pages/test';
 
 function App() {
   return (
@@ -10,8 +9,7 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<Main />} />
-          <Route path="/about" element={<Collection />} />
-          <Route path="/test" element={<Test />} />
+          <Route path="/collection" element={<Collection />} />
         </Routes>
       </div>
     </Router>

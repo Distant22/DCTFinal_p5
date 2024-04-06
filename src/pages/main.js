@@ -4,11 +4,10 @@ import Footer from '../components/footer';
 import NameInput from '../components/name';
 import Options from '../components/Options';
 import optionData from '../options/option.json';
-import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import {ref, getDownloadURL} from "firebase/storage";
 import { getDoc, addDoc, collection, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { imgDB, txtDB } from "../firebase";
 import ReactLoading from 'react-loading';
-import originAudio from '../music/origin.mp3';
 import hopelessAudio from '../music/hopeless.wav';
 import sadAudio from '../music/sad.wav';
 import collapseAudio from '../music/collapse.wav';
@@ -20,7 +19,8 @@ import yesAudio from '../music/yes.wav';
 import sunnyAudio from '../music/sunny.wav';
 import cheerAudio from '../music/cheer.wav';
 import happyAudio from '../music/happy.wav';
-
+// import {uploadBytes} from "firebase/storage";
+// import originAudio from '../music/origin.mp3';
 
 function Main() {
   
@@ -28,6 +28,8 @@ function Main() {
   const [options] = useState(optionData);
   const [result, setResult] = useState(false);
   const [waiting, setWaiting] = useState(true);
+  const [error, setError] = useState(false);
+  const [lock, setLock] = useState(false);
   const audioRef = useRef(null);
 
   const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
@@ -50,41 +52,90 @@ function Main() {
     setResult(val)
   }
 
-  var img_list = ['bank-green','hamburger-blue','residence-brown','temple-origin']
+  // 建築物集合
+  // 200 也可給其他小裝飾
+  // const img_dict = {
+  //   "banana": 0,
+  //   "bank": 100,
+  //   "car": 200,
+  //   'residence': 300,
+  //   'church': 400,
+  //   'hamburger': 500,
+  //   'school': 600,
+  //   "television": 700,
+  //   "skybuilding": 800,
+  //   "factory": 900,
+  //   "drink": 1000,
+  //   "park": 1100,
+  //   "temple": 1200
+  // };
+
+  // TODO : 暫時用香蕉替代所有還沒上傳的建築物
+  const img_dict = {
+    "banana": 0,
+    "bank": 100,
+    "banana": 200,
+    'residence': 300,
+    'church': 400,
+    'hamburger': 500,
+    'banana': 600,
+    "television": 700,
+    "skybuilding": 800,
+    "banana": 900,
+    "banana": 1000,
+    "banana": 1100,
+    "temple": 1200
+  };
+
+  // 指定顏色和建築物字串串接，組成照片名稱
+  const color_dict = [
+    "-black-and-white",
+    "-blue",
+    "-brown",
+    "-green",
+    "-origin",
+    "-pink"
+  ]
 
   const handleUpdateUser = (val) => {
-    var new_score = user.score + val
-    console.log("Updated - score = ",user.score)
-    console.log("Image Type - ",(new_score/100))
-    // imgType: img_list[(new_score/100)-1]
+    console.log("這次加的分數 - ",val)
+    let imgType = 'banana-origin';
+    for (const key in img_dict) {
+      if (img_dict[key] === user.score+val) {
+        // TODO : 先暫時寫死顏色為 origin
+        imgType = key + "-origin";
+        console.log("將圖片決定為",imgType)
+      } 
+    }
     setUser({...user, 
-      score: new_score, 
+      score: user.score + val, 
       uploadTime: serverTimestamp(),
-      imgType: img_list[1]
+      imgType: imgType
     });
   }
 
-  // 上傳資料到 Firebase
+  // 從 Firebase 把對應的建築物載下來
   useEffect(() => {
-
     const getImageUrl = async () => {
       try {
         const imgRef = ref(imgDB, `${user.imgType}.png`);
         const url = await getDownloadURL(imgRef);
         setImageUrl(url);
       } catch (error) {
-        console.error('Error getting image:', error);
+        setError(true)
+        console.log("載入圖片發生錯誤：",error)
       }
     };
 
-    if (result) {
+    // 將使用者資料上傳到 Firebase
+    if (result && !lock) {
+      setLock(true)
       const timeout = setTimeout( async () => {
           try {
               console.log("上傳資料中...User is ",user)
               const docRef = await addDoc(collection(txtDB, 'users'), {...user});
               console.log('Document ID:', docRef.id);
               await getImageUrl();
-
               await updateFirestoreTimestamp();
       
             } catch (error) {
@@ -92,7 +143,7 @@ function Main() {
             }
       }, 3000);
       return () => clearTimeout(timeout);
-    } 
+    }
   }, [result, user]);
 
   // 進入頁面前先等待幾秒跑動畫
@@ -119,52 +170,29 @@ function Main() {
     };
   }, []);
 
-  // Determine which audio to play based on the score
+  // 不同的分數區間對應的音樂列表
+  const audioThresholds = [
+    { threshold: 1200, audio: "hopeless" },
+    { threshold: 1050, audio: "sad" },
+    { threshold: 900, audio: "collapse" },
+    { threshold: 750, audio: "suicide" },
+    { threshold: 600, audio: "depression" },
+    { threshold: 450, audio: "mild" },
+    { threshold: 300, audio: "satisfy" },
+    { threshold: 150, audio: "yes" },
+    { threshold: 0, audio: "sunny" },
+    { threshold: -150, audio: "cheer" },
+    { threshold: -300, audio: "happy" }
+  ];
+  
+  // 看分數在哪個區間，就放哪個音樂
   const getAudioSource = () => {
-    if (user.score >= 1200) {
-      console.log("Playing Audio 'hopeless'");
-      musicSelectedNum = 0;
-      return allAudio[0];
-    } else if (user.score >= 1050) {
-      console.log("Playing Audio 'sad'");
-      musicSelectedNum = 1;
-      return allAudio[1];
-    } else if (user.score >= 900) {
-      console.log("Playing Audio 'collapse'");
-      musicSelectedNum = 2;
-      return allAudio[2];
-    } else if (user.score >= 750) {
-      console.log("Playing Audio 'suicide'");
-      musicSelectedNum = 3;
-      return allAudio[3];
-    } else if (user.score >= 600) {
-      console.log("Playing Audio 'depression'");
-      musicSelectedNum = 4;
-      return allAudio[4];
-    } else if (user.score >= 450) {
-      console.log("Playing Audio 'mild'");
-      musicSelectedNum = 5;
-      return allAudio[5];
-    } else if (user.score >= 300) {
-      console.log("Playing Audio 'satisfy'");
-      musicSelectedNum = 6;
-      return allAudio[6];
-    } else if (user.score >= 150) {
-      console.log("Playing Audio 'yes'");
-      musicSelectedNum = 7;
-      return allAudio[7];
-    } else if (user.score >= 0) {
-      console.log("Playing Audio 'sunny'");
-      musicSelectedNum = 8;
-      return allAudio[8];
-    } else if (user.score >= -150) {
-      console.log("Playing Audio 'cheer'");
-      musicSelectedNum = 9;
-      return allAudio[9];
-    } else if (user.score >= -300) {
-      console.log("Playing Audio 'happy'");
-      musicSelectedNum = 10;
-      return allAudio[10];
+    for (let i = 0; i < audioThresholds.length; i++) {
+      if (user.score >= audioThresholds[i].threshold) {
+        console.log("Playing Audio:", audioThresholds[i].audio);
+        musicSelectedNum = i;
+        return allAudio[i];
+      }
     }
   };
 
@@ -194,15 +222,19 @@ function Main() {
           height={300} 
           width={300} 
         /> 
-        <div style={{ zIndex: waiting ? -1 : 10 }} className={`w-[90%] h-full duration-700 ease-in-out ${waiting ? "opacity-0" : "opacity-100"}`}>
+        <div style={{ zIndex: waiting ? -1 : 10 }} className={`w-[90%] h-full flex flex-col items-center justify-center duration-700 ease-in-out ${waiting ? "opacity-0" : "opacity-100"}`}>
           {user.name === "" ? (
             <NameInput onNameSubmit={handleNameSubmit} />
           ) : (
             <>
               {result ? 
                 <>
-                  <p className="text-sm"> 使用者 {user.name} 的分數是 {user.score}</p>
-                  {imageUrl ? <img src={imageUrl} alt="" /> : <>載入結果中...</>}   
+                  <p className="text-sm text-gray-400 mb-4"> 使用者 {user.name} 的分數是 {user.score}</p>
+                  {
+                    imageUrl ? <img src={imageUrl} className="rounded-xl bg-gray-200 h-[70%]" alt="" /> : 
+                    error ? <>載入圖片遇到問題</> :
+                    <>載入結果中...</>
+                  }   
                   <audio ref={audioRef} autoPlay loop>
                     <source src={getAudioSource()} type="audio/wav" />
                     Your browser does not support the audio element.
