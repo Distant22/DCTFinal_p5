@@ -172,17 +172,17 @@ function Main() {
 
   // 不同的分數區間對應的音樂列表
   const audioThresholds = [
-    { threshold: 1200, audio: "hopeless" },
-    { threshold: 1050, audio: "sad" },
-    { threshold: 900, audio: "collapse" },
-    { threshold: 750, audio: "suicide" },
-    { threshold: 600, audio: "depression" },
-    { threshold: 450, audio: "mild" },
-    { threshold: 300, audio: "satisfy" },
-    { threshold: 150, audio: "yes" },
-    { threshold: 0, audio: "sunny" },
-    { threshold: -150, audio: "cheer" },
-    { threshold: -300, audio: "happy" }
+    { threshold: 1100, audio: "hopeless" },
+    { threshold: 990, audio: "sad" },
+    { threshold: 880, audio: "collapse" },
+    { threshold: 770, audio: "suicide" },
+    { threshold: 660, audio: "depression" },
+    { threshold: 550, audio: "mild" },
+    { threshold: 440, audio: "satisfy" },
+    { threshold: 330, audio: "yes" },
+    { threshold: 220, audio: "sunny" },
+    { threshold: 110, audio: "cheer" },
+    { threshold: 0, audio: "happy" }
   ];
   
   // 看分數在哪個區間，就放哪個音樂
