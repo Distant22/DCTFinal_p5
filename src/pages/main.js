@@ -212,9 +212,9 @@ function Main() {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-y-hidden font-serif relative">
-      <Header />
-      <div className="h-[70%] duration-700 ease-in-out font-bold flex flex-col items-center justify-center relative">
+    <div className="flex flex-col h-screen overflow-y-hidden font-serif relative bg-[#62a1b6]">
+      {/* <Header /> */}
+      <div className="h-[100%] duration-700 ease-in-out font-bold flex flex-col items-center justify-center relative">
         <ReactLoading 
           className={`absolute w-full h-full duration-300 ease-in-out ${waiting ? "opacity-100" : "opacity-0"}`} 
           type={"bubbles"} 
@@ -248,7 +248,7 @@ function Main() {
           )}
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
