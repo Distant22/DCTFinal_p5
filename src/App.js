@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
-import Main from './pages/main';
 import Collection from './pages/collection';
 import NewPage from './pages/newpage';
 
@@ -9,7 +8,6 @@ function App() {
     <Router>
       <div>
         <Routes>
-          {/* <Route exact path="/" element={<Main />} /> */}
           <Route exact path="/" element={<NewPage />} /> 
           <Route path="/collection" element={<Collection />} />
         </Routes>
