@@ -82,7 +82,7 @@ function Message({ onNameSubmit }) {
   }, [message]);
 
   return (
-    <div className={` ${fade ? "opacity-0" : "opacity-100"} duration-300 flex flex-col h-screen w-screen items-center justify-center`}>
+    <div className={` ${fade ? "opacity-0" : "opacity-100"} duration-300 flex flex-col h-full w-screen items-center justify-center`}>
 
       {/* 頂端美編 */}
       <p className="h-[5%] w-full flex items-end space-x-2 bg-[#F5F5F5]">

@@ -114,7 +114,7 @@ function Main({ nameProp, setResult }) {
   }, []);
 
   return (
-    <div className={`${(waiting || upload) ? "opacity-0" : "opacity-100"} w-screen duration-300 flex flex-col h-screen overflow-y-hidden font-serif relative bg-[#62a1b6]`}>
+    <div className={`${(waiting || upload) ? "opacity-0" : "opacity-100"} w-screen duration-300 flex flex-col h-full overflow-y-hidden font-serif relative bg-[#62a1b6]`}>
       <div className="h-[100%] duration-700 ease-in-out font-bold flex flex-col items-center justify-center relative">
         <div className={`w-[90%] h-full flex flex-col items-center justify-center duration-700 ease-in-out ${waiting ? "opacity-0" : "opacity-100"}`}>
           <>

@@ -22,7 +22,7 @@ function NameInput({ onChangePage }) {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen w-screen items-center justify-center bg-[#62A1B6]">
+    <div className="flex flex-col h-full w-screen items-center justify-center bg-[#62A1B6]">
 
       {/* 頂端美編 */}
       <p className="h-[5%] w-full flex items-end space-x-2 ">
