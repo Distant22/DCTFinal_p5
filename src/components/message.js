@@ -121,7 +121,7 @@ function Message({ onNameSubmit }) {
         <div ref={messageEndRef}></div>
       </div>
 
-      <p className="h-[7%] w-full flex items-start space-x-1 ">
+      <p className="h-[7%] w-full flex items-start space-x-1 relative ">
         <p className='w-[1%]' />
         <img alt="Camera" className="hover:h-[68%] hover:-translate-y-1 duration-300 h-[63%] mt-1" src={Camera} />
         <img alt="Appstore" className="hover:h-[83%] hover:-translate-y-1 duration-300 h-[78%]" src={Appstore} />
@@ -144,7 +144,7 @@ function Message({ onNameSubmit }) {
         <img 
             alt="Button"
             onClick={() => handleSendText(text)} 
-            className="right-4 bottom-4 h-[3.5%] absolute" 
+            className="right-3 bottom-6 size-8 absolute z-10" 
             src={Button} 
         />
       </p>

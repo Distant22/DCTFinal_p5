@@ -18,6 +18,12 @@ function NewPage() {
 
   const handleChangePage = (val) => {
     setPage(val)
+    setUser({...user,
+      name: "",
+      imgType: null,
+      score: 0,
+      uploadTime: null
+    })
   };
 
   const handleUserName = async (val) => {
@@ -49,7 +55,7 @@ function NewPage() {
         { page === "init" ? <NameInput onChangePage={handleChangePage} /> : <></>}
         { page === "message" ? <Message onNameSubmit={handleUserName} /> : <></>}
         { page === "main" ? <Main nameProp={user.name} setResult={handleResult} /> : <></>}
-        { page === "result" ? <Result userProp={user} /> : <></>}
+        { page === "result" ? <Result userProp={user} onRestart={handleChangePage} /> : <></>}
     </div>
   );
 }

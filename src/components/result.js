@@ -24,7 +24,7 @@ import sunnyAudio from '../music/sunny.wav';
 import cheerAudio from '../music/cheer.wav';
 import happyAudio from '../music/happy.wav';
 
-function Result({ userProp }) {
+function Result({ userProp, onRestart }) {
 
   const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
   const allAudioName = ['hopeless','sad','collapse','suicide','depression','mild','satisfy','yes','sunny','cheer','happy'];
@@ -45,6 +45,10 @@ function Result({ userProp }) {
         side: "right",
         text: val
       }])
+    }
+
+    if ( val === "Restart" ) {
+      onRestart("init")
     }
   }
 
