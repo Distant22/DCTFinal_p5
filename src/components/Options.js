@@ -21,6 +21,7 @@ function Options({ options, onChooseOption, onResult }) {
         setSelectedOptions([...selectedOptions]);
         setChoice(val)
     };
+ 
 
     const handleSubmit = () => {
         setAnimation(true)
@@ -49,7 +50,7 @@ function Options({ options, onChooseOption, onResult }) {
             </div>
         </div>
 
-        <img className='h-[25%] aspect-square object-cover mb-2' alt="" src={questionBackground[count]} />
+        <img className='h-[20%] aspect-square object-cover' alt="" src={questionBackground[count]} />
 
         <div className={`duration-700 justify-center chat-start text-md flex flex-col w-full ${selectedOptions.length > 0 ? "h-[12%] items-start" : "items-center  h-full"}
         ${animation ? 'opacity-0 ease-in-out' : 'ease-in-out opacity-100'} 
@@ -57,11 +58,11 @@ function Options({ options, onChooseOption, onResult }) {
             <p className={`ml-6 w-[85%] h-[70%] chat-bubble chat-bubble-primary text-gray-50 text-sm`}>{options[count].problem}</p>
         </div>
 
-        <div className={`py-3 chat chat-end flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[36%]" : "h-[0%]"}`}>
+        <div className={`chat chat-end flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[45%]" : "h-[0%]"}`}>
             {selectedOptions.map((val, index) => (
             <button
                 key={index}
-                className={`mr-6 chat-bubble w-[100%] h-[25%] rounded-[30px] hover:text-black text-sm
+                className={`mr-6 chat-bubble w-[100%] h-[100%] rounded-[30px] hover:text-black text-sm
                 ${choice === index ? 'bg-blue-200 text-black' : 'bg-gray-800 text-white'}
                 ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'}
                 `}

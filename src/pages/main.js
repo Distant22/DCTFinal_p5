@@ -11,6 +11,8 @@ function Main({ nameProp, setResult }) {
   const [waiting, setWaiting] = useState(true);
   const [upload, setUpload] = useState(false);
   const audioRef = useRef(null);
+  const [problemCount, setProblemCount] = useState(1)
+  const [color, setColor] = useState(0)
 
   // 設定初始名稱
   const [user, setUser] = useState({
@@ -22,69 +24,75 @@ function Main({ nameProp, setResult }) {
 
   const handleResult = (val) => {
     setUpload(val)
-    setResult(user)
   }
-
-  // 建築物集合
-  // 200 也可給其他小裝飾
-  // const img_dict = {
-  //   "banana": 0,
-  //   "bank": 100,
-  //   "car": 200,
-  //   'residence': 300,
-  //   'church': 400,
-  //   'hamburger': 500,
-  //   'school': 600,
-  //   "television": 700,
-  //   "skybuilding": 800,
-  //   "factory": 900,
-  //   "drink": 1000,
-  //   "park": 1100,
-  //   "temple": 1200
-  // };
 
   // TODO : 暫時用香蕉替代所有還沒上傳的建築物
   const img_dict = {
     "banana": 0,
     "bank": 100,
-    "banana": 200,
+    "garbage": 200,
     'residence': 300,
     'church': 400,
     'hamburger': 500,
-    'banana': 600,
+    'school': 600,
     "television": 700,
     "skybuilding": 800,
-    "banana": 900,
-    "banana": 1000,
-    "banana": 1100,
+    "factory": 900,
+    "drink": 1000,
+    "park": 1100,
     "temple": 1200
   };
 
   // 指定顏色和建築物字串串接，組成照片名稱
   const color_dict = [
     "-black-and-white",
+    "-black-and-white",
+    "-blue",
     "-blue",
     "-brown",
+    "-brown",
     "-green",
-    "-origin",
+    "-pink",
     "-pink"
   ]
 
   const handleUpdateUser = (val) => {
-    console.log("這次加的分數 - ",val)
-    let imgType = 'banana-origin';
-    for (const key in img_dict) {
-      if (img_dict[key] === user.score+val) {
-        // TODO : 先暫時寫死顏色為 origin
-        imgType = key + "-origin";
-        console.log("將圖片決定為",imgType)
-      } 
+
+    let imgType = user.imgType;
+    let score = user.score;
+
+    try {
+      if ( problemCount > 6) {
+        imgType += color_dict[ color + val + 4 ]
+      } else if ( problemCount > 5 ) {
+        setColor( color => color + val )
+      } else {
+        score += val
+        for (const key in img_dict) {
+          if (img_dict[key] === user.score+val) {
+            imgType = key;
+            console.log("將圖片決定為",imgType)
+          } 
+        }
+      }
+    } finally {
+      console.log("確認 Image Type : ",imgType)
+      console.log("確認分數：",score)
+      setUser({...user, 
+        score: score,
+        imgType: imgType
+      });
+      if ( problemCount > 6 ) {
+        let finalImage = user.score === 0 ? "banana-origin" : imgType
+        setResult({
+          name: user.name,
+          score: user.score,
+          uploadTime: serverTimestamp(),
+          imgType: finalImage
+        })
+      }
+      setProblemCount( count => count + 1)
     }
-    setUser({...user, 
-      score: user.score + val, 
-      uploadTime: serverTimestamp(),
-      imgType: imgType
-    });
   }
 
   // 進入頁面前先等待幾秒跑動畫
@@ -99,13 +107,11 @@ function Main({ nameProp, setResult }) {
   }, []);
 
   useEffect(() => {
-    // Automatically play the audio when the component mounts
     const audioPlayer = audioRef.current;
     if (audioPlayer) {
       audioPlayer.play();
     }
   
-    // Pause the audio when the component unmounts
     return () => {
       if (audioPlayer) {
         audioPlayer.pause();
