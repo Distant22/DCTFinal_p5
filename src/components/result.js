@@ -8,7 +8,6 @@ import Appstore from '../page_item/appstore.png'
 import Messagecount from '../page_item/messagecount.png'
 import Banner from '../page_item/banner.png'
 import Arrow from '../page_item/arrow.png'
-import Button from '../page_item/button.png'
 import {ref, getDownloadURL} from "firebase/storage";
 import { imgDB, txtDB } from "../firebase";
 import { getDoc, addDoc, collection, doc, updateDoc } from "firebase/firestore";
@@ -156,8 +155,8 @@ function Result({ userProp, onRestart }) {
         <p className="w-[15.2%]" />
         <p className="w-[39%] h-full  flex flex-col items-center justify-center">
             <img alt="Banner" className="h-[50%] hover:h-[60%] duration-300" src={Banner} />
-            <p className='h-[25%] flex space-x-1 mt-2'>
-                <p className='w-full h-full text-xs text-gray-700'>+886 005-070-512</p>
+            <p className='w-full h-[25%] space-x-1 flex mt-2'>
+                <p className='w-max h-full text-xs text-gray-700'>+886 005-070-512</p>
                 <img alt="Arrow" src={Arrow} className='mt-1 h-[40%]' />
             </p>
         </p>
@@ -205,11 +204,6 @@ function Result({ userProp, onRestart }) {
             placeholder="輸入..." 
             maxLength={12}
             className='duration-500 pl-4 text-sm w-[72%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
-        />
-        <img 
-            onClick={() => handleSendText(text)} 
-            className="right-4 bottom-4 h-[3.5%] absolute" 
-            src={Button} 
         />
       </p>
     </div>
