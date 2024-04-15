@@ -53,10 +53,10 @@ function Options({ options, onChooseOption, onResult }) {
 
         <img className='h-[25%] aspect-square object-cover mb-2' alt="" src={questionBackground[count]} />
 
-        <div className={`first-letter:chat chat-start text-md flex flex-col w-full ${selectedOptions.length > 0 ? "h-[12%] items-start justify-center" : "items-center justify-center h-full"}
-        ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'} 
+        <div className={`duration-700 justify-center chat-start text-md flex flex-col w-full ${selectedOptions.length > 0 ? "h-[12%] items-start" : "items-center  h-full"}
+        ${animation ? 'opacity-0 ease-in-out' : 'ease-in-out opacity-100'} 
         `}>
-            <p className={`ml-6 w-[85%] h-[70%] chat-bubble chat-bubble-primary text-sm`}>{options[count].problem}</p>
+            <p className={`ml-6 w-[85%] h-[70%] chat-bubble chat-bubble-primary text-gray-50 text-sm`}>{options[count].problem}</p>
         </div>
 
         <div className={`py-3 chat chat-end flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[36%]" : "h-[0%]"}`}>
@@ -64,7 +64,7 @@ function Options({ options, onChooseOption, onResult }) {
             <button
                 key={index}
                 className={`mr-6 chat-bubble w-[100%] h-[25%] rounded-[30px] hover:text-black text-sm
-                ${choice === index ? 'focus:bg-purple-300 bg-purple-300 text-black' : 'bg-gray-800 text-white'}
+                ${choice === index ? 'bg-blue-200 text-black' : 'bg-gray-800 text-white'}
                 ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'}
                 `}
                 onClick={() => handleOptionClick(index)}

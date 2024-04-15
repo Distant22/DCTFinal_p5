@@ -36,7 +36,6 @@ function NewPage() {
       r => setTimeout(r, ms)
     );
     await sleep(1000)
-    console.log("傳過來的 VA : ",val)
     setUser({...user,
       imgType: val.imgType,
       score: val.score,

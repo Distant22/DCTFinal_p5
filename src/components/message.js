@@ -98,11 +98,11 @@ function Message({ onNameSubmit }) {
       <p className='h-[15%] w-full bg-[#F5F5F5] flex justify-start items-start'>
         <img className="h-[20%] w-[11%] mt-7 ml-4 lg:w-[5%] "alt="Msgcount"  src={Messagecount} />
         <p className="w-[15.2%]" />
-        <p className="w-[39%] h-full  flex flex-col items-center justify-center">
+        <p className=" w-[39%] h-full  flex flex-col items-center justify-center">
             <img className="h-[50%] hover:h-[60%] duration-300" alt="Banner" src={Banner} />
             <p className='h-[25%] flex space-x-1 mt-2'>
-                <p className='h-full text-xs text-gray-700'>+886 005-070-512</p>
-                <img alt="Arrow" src={Arrow} className='mt-1 h-[40%]' />
+                <p className='w-full h-full text-xs text-gray-700'>+886 005-070-512</p>
+                <img alt="Arrow" src={Arrow} className=' mt-1 h-[40%]' />
             </p>
         </p>
       </p>
