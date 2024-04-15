@@ -141,12 +141,6 @@ function Message({ onNameSubmit }) {
             maxLength={12}
             className='duration-500 pl-4 text-sm w-[72%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
         />
-        <img 
-            alt="Button"
-            onClick={() => handleSendText(text)} 
-            className="right-3 bottom-6 size-8 absolute z-10" 
-            src={Button} 
-        />
       </p>
     </div>
   );
