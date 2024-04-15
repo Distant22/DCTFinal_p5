@@ -170,8 +170,8 @@ function Result({ userProp, onRestart }) {
           <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>使用者 { userProp.name } 的分數是 { userProp.score }</div>    
         </div>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>
-            <img src={imageUrl} className="rounded-xl bg-gray-200 h-[70%]" alt="" />  
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800 object-contain'>
+            <img src={imageUrl} className="rounded-xl bg-gray-200 h-[70%] w-[70%]" alt="" />  
           </div>    
         </div>
         <audio ref={audioRef} autoPlay loop>

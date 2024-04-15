@@ -1,15 +1,14 @@
 import React, { useState }  from 'react';
-// import question1Pic from '../background-img/question1-pic.png';
-// import question2Pic from '../background-img/question2-pic.png';
-// import question3Pic from '../background-img/question3-pic.png';
-// import question4Pic from '../background-img/question4-pic.png';
-// import question5Pic from '../background-img/question5-pic.png';
-// import question6Pic from '../background-img/question6-pic.png';
-// import question7Pic from '../background-img/question7-pic.png';
-import temp_bg from '../background-img/temp-bg.png';
+import question1Pic from '../background-img/q1.png';
+import question2Pic from '../background-img/q2.png';
+import question3Pic from '../background-img/q3.png';
+import question4Pic from '../background-img/q4.png';
+import question5Pic from '../background-img/q5.png';
+import question6Pic from '../background-img/q6.png';
+import question7Pic from '../background-img/q7.png';
 
-// const questionBackground = [question1Pic, question2Pic, question3Pic, question4Pic, question5Pic, question6Pic, question7Pic];
-const questionBackground = [temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg]
+const questionBackground = [question1Pic, question2Pic, question3Pic, question4Pic, question5Pic, question6Pic, question7Pic];
+// const questionBackground = [temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg]
 
 function Options({ options, onChooseOption, onResult }) {
 

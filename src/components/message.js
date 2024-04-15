@@ -8,7 +8,6 @@ import Appstore from '../page_item/appstore.png'
 import Messagecount from '../page_item/messagecount.png'
 import Banner from '../page_item/banner.png'
 import Arrow from '../page_item/arrow.png'
-import Button from '../page_item/button.png'
 
 function Message({ onNameSubmit }) {
 
