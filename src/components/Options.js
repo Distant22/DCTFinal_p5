@@ -8,7 +8,6 @@ import question6Pic from '../background-img/q6.png';
 import question7Pic from '../background-img/q7.png';
 
 const questionBackground = [question1Pic, question2Pic, question3Pic, question4Pic, question5Pic, question6Pic, question7Pic];
-// const questionBackground = [temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg, temp_bg]
 
 function Options({ options, onChooseOption, onResult }) {
 
