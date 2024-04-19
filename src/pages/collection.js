@@ -87,8 +87,8 @@ function Collection() {
       };
 
     let p5_city = []
-    let x = -500;
-    let y = -400;
+    let x = -495;
+    let y = -405;
     let temp_x = 0
     let temp_y = 0;
     let fontRegular;
@@ -121,11 +121,13 @@ function Collection() {
             console.log(p5_city.length)
 
             for (let i = 0; i < p5_city.length; i++){
+                let building_size = 40;
+                let building_column_count = 15;
 
                 // 設定顯示的 x , y 軸
-                temp_x = x + 100 * (i % 10)
-                temp_y = y + 150 * Math.floor(i / 10);
-                p5.image(p5_city[i], temp_x, temp_y, 100, 100)
+                temp_x = x + (building_size + 29) * (i % building_column_count)
+                temp_y = y + (building_size + 37) * Math.floor(i / building_column_count);
+                p5.image(p5_city[i], temp_x, temp_y, building_size, building_size)
 
                 // 如果有表情符號則額外處理
                 if (containsEmojis(username[i])) {
@@ -135,9 +137,9 @@ function Collection() {
                 }
 
                 let textWidth = p5.textWidth(username[i]);
-                let textX = temp_x + 50 - textWidth / 2;
+                let textX = temp_x + building_size / 2 - textWidth / 2;
 
-                p5.text(username[i], textX, temp_y + 125, 100, 100);
+                p5.text(username[i], textX, temp_y + 1.3 * building_size, 50, 50);
             }
         };
     }
