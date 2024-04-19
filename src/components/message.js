@@ -55,14 +55,14 @@ function Message({ onNameSubmit }) {
     }
     
     if ( val !== "" && state === "Confirm" ) {
-      if ( val === "Yes" ) {
+      if ( val.toLowerCase() === "yes" ) {
         const sleep = ms => new Promise(
           r => setTimeout(r, ms)
         );
         await sleep(500)
         setFade(true)
         onNameSubmit(name)
-      } else if ( val === "No" ) {
+      } else if ( val.toLowerCase() === "no" ) {
         setState("Name")
         setMessage([...message, {
           side: "left",

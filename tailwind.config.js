@@ -6,12 +6,6 @@ module.exports = {
       fontFamily: { 
         "serif": ['Noto Serif TC'] 
       },
-      height: {
-        '256': '1024px',
-      },
-      width: {
-        '256': '1024px',
-      } 
     },
   },
   plugins: [require("daisyui")],

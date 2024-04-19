@@ -46,7 +46,7 @@ function Result({ userProp, onRestart }) {
       }])
     }
 
-    if ( val === "Restart" ) {
+    if ( val.toLowerCase() === "restart" ) {
       onRestart("init")
     }
   }
@@ -166,12 +166,15 @@ function Result({ userProp, onRestart }) {
       {/* 下排版 */}
       <p className='h-[73%] w-[90%] flex flex-col overflow-y-scroll my-2'>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>使用者 { userProp.name } 的分數是 { userProp.score }</div>    
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>{ userProp.name } 你好，這是代表你的建築物：</div>    
         </div>
         <div className="chat chat-start">
           <div className='chat-bubble duration-300 bg-gray-200 text-gray-800 object-contain'>
-            <img src={imageUrl} className="rounded-xl bg-gray-200 h-[70%] w-[70%]" alt="" />  
+            <img src={imageUrl} className="rounded-xl bg-gray-200 h-[70%] w-full" alt="" />  
           </div>    
+        </div>
+        <div className="chat chat-start">
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>可以輸入 Restart 再玩一次。</div>    
         </div>
         <audio ref={audioRef} autoPlay loop>
           <source src={getAudioSource()} type="audio/wav" />
