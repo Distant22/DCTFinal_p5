@@ -14,6 +14,7 @@ import yesAudio from '../music/yes.wav';
 import sunnyAudio from '../music/sunny.wav';
 import cheerAudio from '../music/cheer.wav';
 import happyAudio from '../music/happy.wav';
+import result_background from '../background-img/result.png'
 
 function Collection() {
     const [result, setResult] = useState(false);
@@ -86,8 +87,6 @@ function Collection() {
       };
 
     let p5_city = []
-    let x = -500;
-    let y = -400;
     let temp_x = 0
     let temp_y = 0;
     let fontRegular;
@@ -108,18 +107,34 @@ function Collection() {
                     p5.append(p5_city,p5.loadImage(cities[i]))
                 }
             }, 3000);
+            
         }
 
-        p5.draw = () => {
-            p5.background('gray');
+        let x = -442;
+        let y = -360;
+
+        let position_matrix = [
+            // [0,4], [0,5], [0,7], [0,9], [0,10], [0,12],
+            // [1,0], [1,1], [1,2],
+            [2,0], [2,1], [2,2], [2,4], [2,5], [2,6], [2,7], [2,9], [2,10], [2,12],
+            [3,4], [3,5], [3,6], [3,7], [3,9], [3,10], [3,12],
+            [4,0], [4,1], [4,2], 
+            [5,0], [5,1], [5,2], [5,4], [5,5], [5,6], [5,7], [5,8], [5,9], [5,10], [5,12],
+            [7,0], [7,1], [7,2], [7,4], [7,6], [7,7], [7,9], [7,10], [7,12],
+            [8,4], [8,6], [8,7], [8,9], [8,10], [2,12],
+            [9,0], [9,1], [9,2], [9,4], [9,6], [9,7], [9,9], [9,10], [9,12]
+        ]
+
+        p5.draw = () => {            
+
             console.log(p5_city.length)
 
             for (let i = 0; i < p5_city.length; i++){
 
                 // 設定顯示的 x , y 軸
-                temp_x = x + 100 * (i % 10)
-                temp_y = y + 150 * Math.floor(i / 10);
-                p5.image(p5_city[i], temp_x, temp_y, 100, 100)
+                temp_x = x + 70.6 * position_matrix[i][1]
+                temp_y = y + 77 * position_matrix[i][0];
+                p5.image(p5_city[i], temp_x, temp_y, 50, 50)
 
                 // 如果有表情符號則額外處理
                 if (containsEmojis(username[i])) {
@@ -129,9 +144,10 @@ function Collection() {
                 }
 
                 let textWidth = p5.textWidth(username[i]);
-                let textX = temp_x + 50 - textWidth / 2;
+                let textX = temp_x + 25 - textWidth / 2;
 
-                p5.text(username[i], textX, temp_y + 125, 100, 100);
+                p5.textSize(10)
+                p5.text(username[i], textX, temp_y + 70, 100, 100);
             }
         };
     }
@@ -148,9 +164,10 @@ function Collection() {
     };
 
     return (
-        <div className="items-center justify-center flex bg-blue-50 h-screen w-screen"> 
+        <div className="items-center justify-center flex bg-blue-50 h-screen w-screen relative"> 
+            <img className="absolute h-256 w-256 z-0" src={result_background} />
             {result ? (
-                <div className="flex items-center justify-center" onClick={handleAudioPlayback}>
+                <div className="flex items-center justify-center relative z-10" onClick={handleAudioPlayback}>
                     <ReactP5Wrapper sketch={sketch} />
                     <audio ref={audioRef} loop>
                         <source src={getAudioSource()} type="audio/wav" />
@@ -158,7 +175,7 @@ function Collection() {
                     </audio> 
                 </div>
             ) : (
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center relative z-10">
                     載入測試頁面...
                 </div>
             )}

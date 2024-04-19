@@ -5,6 +5,12 @@ module.exports = {
     extend: {
       fontFamily: { 
         "serif": ['Noto Serif TC'] 
+      },
+      height: {
+        '256': '1024px',
+      },
+      width: {
+        '256': '1024px',
       } 
     },
   },
