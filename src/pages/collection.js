@@ -14,6 +14,7 @@ import yesAudio from '../music/yes.wav';
 import sunnyAudio from '../music/sunny.wav';
 import cheerAudio from '../music/cheer.wav';
 import happyAudio from '../music/happy.wav';
+import resultBackground from '../background-img/resultBackground.png';
 
 function Collection() {
     const [result, setResult] = useState(false);
@@ -92,26 +93,31 @@ function Collection() {
     let temp_y = 0;
     let fontRegular;
     let fontEmoji;
+    
 
-    function sketch(p5) {
+    function sketch(p5) {  
+        let backgroundImage;
+
+        p5.preload = () => {
+            backgroundImage = p5.loadImage(resultBackground);
+            fontRegular = p5.loadFont("./NotoSansTC-Bold.ttf");
+            fontEmoji = p5.loadFont("./NotoEmoji-Bold.ttf");
+            console.log("Preload called")
+            for (let i = 0; i < cities.length; i++) {
+                p5.append(p5_city,p5.loadImage(cities[i]))
+            }
+        }
+
         p5.setup = () => {
             console.log("Setup called")
-            p5.createCanvas(1000, 800, p5.WEBGL);
-        }
-        
-        p5.preload = () => {
-            setTimeout(() => {
-                fontRegular = p5.loadFont("./NotoSansTC-Bold.ttf");
-                fontEmoji = p5.loadFont("./NotoEmoji-Bold.ttf");
-                console.log("Preload called")
-                for (let i = 0; i < cities.length; i++) {
-                    p5.append(p5_city,p5.loadImage(cities[i]))
-                }
-            }, 3000);
+            p5.createCanvas(1000, 3500, p5.WEBGL);
+            backgroundImage.resize(p5.width, 3279 * p5.width / 3324);
+            console.log(backgroundImage.width, backgroundImage.height);
+            p5.image(backgroundImage,-500,-400);
+            p5.image(backgroundImage,-500,-400 + 3279 * p5.width / 3324);
         }
 
-        p5.draw = () => {
-            p5.background('gray');
+        p5.draw = () => {            
             console.log(p5_city.length)
 
             for (let i = 0; i < p5_city.length; i++){
