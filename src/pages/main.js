@@ -19,7 +19,8 @@ function Main({ nameProp, setResult }) {
     name: "",
     score: 0,
     uploadTime: null,
-    imgType: null
+    imgType: null,
+    chosenOption: [],
   })
 
   const handleResult = (val) => {
@@ -60,6 +61,7 @@ function Main({ nameProp, setResult }) {
 
     let imgType = user.imgType;
     let score = user.score;
+    let chosenOption = [...user.chosenOption, val];
 
     try {
       if ( problemCount > 6) {
@@ -80,7 +82,8 @@ function Main({ nameProp, setResult }) {
       console.log("確認分數：",score)
       setUser({...user, 
         score: score,
-        imgType: imgType
+        imgType: imgType,
+        chosenOption: chosenOption,
       });
       if ( problemCount > 6 ) {
         let finalImage = user.score === 0 ? "banana-origin" : imgType
@@ -88,7 +91,8 @@ function Main({ nameProp, setResult }) {
           name: user.name,
           score: user.score,
           uploadTime: serverTimestamp(),
-          imgType: finalImage
+          imgType: finalImage,
+          chosenOption: chosenOption,
         })
       }
       setProblemCount( count => count + 1)

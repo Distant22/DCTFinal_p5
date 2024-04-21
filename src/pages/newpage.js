@@ -13,7 +13,8 @@ function NewPage() {
     name: "",
     score: 0,
     uploadTime: null,
-    imgType: null
+    imgType: null,
+    chosenOption: [],
   })
 
   const handleChangePage = (val) => {
@@ -22,7 +23,8 @@ function NewPage() {
       name: "",
       imgType: null,
       score: 0,
-      uploadTime: null
+      uploadTime: null,
+      chosenOption: [],
     })
   };
 
@@ -45,7 +47,8 @@ function NewPage() {
     setUser({...user,
       imgType: val.imgType,
       score: val.score,
-      uploadTime: val.uploadTime
+      uploadTime: val.uploadTime,
+      chosenOption: val.chosenOption,
     })
     setPage("result")
   }
