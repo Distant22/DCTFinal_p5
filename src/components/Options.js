@@ -16,27 +16,34 @@ function Options({ options, onChooseOption, onResult }) {
     const [selectedOptions, setSelectedOptions] = useState([...options[count].choices]);
 
     const [animation, setAnimation] = useState(false)
+    const [block, setBlock] = useState(false)
     
     const handleOptionClick = (val) => {
+        setBlock(false)
         setSelectedOptions([...selectedOptions]);
         setChoice(val)
     };
  
 
     const handleSubmit = () => {
-        setAnimation(true)
-        setTimeout(() => {
-            setAnimation(false)
-            onChooseOption(options[count].value[choice])
-            setCount(prevCount => (count + 1 < options.length) ? prevCount + 1 : 0);
-            if (options[count + 1].choices.length === 0){
-                onResult(true)
-            } else {
-                setSelectedOptions([...options[count + 1].choices]);
-            }
+        if ( choice === "" ) {
+            setBlock(true)
+        } else {
+            let ans = choice
             setChoice("");
-
-        }, 1200);     
+            setAnimation(true)
+            setTimeout(() => {
+                setAnimation(false)
+                onChooseOption(options[count].value[ans])
+                setCount(prevCount => (count + 1 < options.length) ? prevCount + 1 : 0);
+                if (options[count + 1].choices.length === 0){
+                    onResult(true)
+                } else {
+                    setSelectedOptions([...options[count + 1].choices]);
+                }
+                setBlock(false)
+            }, 1200);  
+        }
     };
 
     return (
@@ -76,11 +83,13 @@ function Options({ options, onChooseOption, onResult }) {
         <div className={`flex justify-center w-full items-center ${selectedOptions.length > 0 ? "h-[10%]" : "h-[0%]"}`}>
             {/* {(alert && selectedOptions.length > 0) ? <p className="text-red-600 h-full pr-4 flex items-center">記得選擇選項！</p> : <></>} */}
             {selectedOptions.length > 0 ? <button
-            className={`h-[70%] w-[90%] duration-300 rounded-[30px] hover:bg-purple-300 hover:text-black bg-gray-800 text-white
-            ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'} `}
+            className={`ease-in-out duration-700 h-[70%] w-[90%] rounded-[30px]  hover:text-black text-white  bg-gray-800
+            ${animation ? 'opacity-0' : 'opacity-100'} 
+            ${block ? 'hover:bg-red-400 ' : 'hover:bg-purple-300'}
+            `}
             onClick={handleSubmit}
             >
-            送出
+            { block ? "請選擇選項！" : "送出"}
             </button> :
             <></>}
         </div>
