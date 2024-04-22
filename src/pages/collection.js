@@ -166,7 +166,7 @@ function Collection() {
                 let textWidth = p5.textWidth(username[i]);
                 let textX = temp_x + building_size / 2 - textWidth / 2;
 
-                p5.text(username[i], textX, temp_y + 1.3 * building_size, 50, 50);
+                p5.text(username[i], textX, temp_y + 1.6 * building_size, 50, 50);
                 p5.fill(80)
             }
         };
