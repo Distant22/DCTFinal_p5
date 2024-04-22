@@ -59,19 +59,19 @@ function Options({ options, onChooseOption, onResult }) {
 
         <img className='h-[20%] aspect-square object-cover' alt="" src={questionBackground[count]} />
 
-        <div className={`duration-700 justify-center chat-start text-md flex flex-col w-full ${selectedOptions.length > 0 ? "h-[12%] items-start" : "items-center  h-full"}
+        <div className={` duration-700 justify-center chat-start text-md flex flex-col w-full ${selectedOptions.length > 0 ? "h-[15%] items-start" : "items-center  h-full"}
         ${animation ? 'opacity-0 ease-in-out' : 'ease-in-out opacity-100'} 
         `}>
-            <p className={`ml-6 w-[85%] h-[70%] chat-bubble chat-bubble-primary text-gray-50 text-sm`}>{options[count].problem}</p>
+            <p className={`ml-6 w-[85%] h-max chat-bubble chat-bubble-primary text-gray-50 text-md`}>{options[count].problem}</p>
         </div>
 
-        <div className={`chat chat-end flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[45%]" : "h-[0%]"}`}>
+        <div className={` chat chat-end flex flex-col space-y-3 w-full ${selectedOptions.length > 0 ? "h-[45%]" : "h-[0%]"}`}>
             {selectedOptions.map((val, index) => (
             <button
                 key={index}
-                className={`mr-6 chat-bubble w-[100%] h-[100%] rounded-[30px] hover:text-black text-sm
+                className={`mr-6 chat-bubble w-[100%] h-[20%] rounded-[30px] hover:text-black text-sm duration-700
                 ${choice === index ? 'bg-blue-200 text-black' : 'bg-gray-800 text-white'}
-                ${animation ? 'opacity-0 ease-in-out duration-700' : 'ease-in-out duration-700 opacity-100'}
+                ${animation ? 'opacity-0 ease-in-out' : 'ease-in-out opacity-100'}
                 `}
                 onClick={() => handleOptionClick(index)}
             >
@@ -83,9 +83,9 @@ function Options({ options, onChooseOption, onResult }) {
         <div className={`flex justify-center w-full items-center ${selectedOptions.length > 0 ? "h-[10%]" : "h-[0%]"}`}>
             {/* {(alert && selectedOptions.length > 0) ? <p className="text-red-600 h-full pr-4 flex items-center">記得選擇選項！</p> : <></>} */}
             {selectedOptions.length > 0 ? <button
-            className={`ease-in-out duration-700 h-[70%] w-[90%] rounded-[30px]  hover:text-black text-white  bg-gray-800
+            className={`ease-in-out duration-700 h-[70%] w-[90%] rounded-[30px]  hover:text-black text-black  bg-blue-200
             ${animation ? 'opacity-0' : 'opacity-100'} 
-            ${block ? 'hover:bg-red-400 ' : 'hover:bg-purple-300'}
+            ${block ? 'hover:bg-red-400 ' : ''}
             `}
             onClick={handleSubmit}
             >

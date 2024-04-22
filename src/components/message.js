@@ -8,6 +8,7 @@ import Appstore from '../page_item/appstore.png'
 import Messagecount from '../page_item/messagecount.png'
 import Banner from '../page_item/banner.png'
 import Arrow from '../page_item/arrow.png'
+import Button from '../page_item/button.png'
 
 function Message({ onNameSubmit }) {
 
@@ -40,7 +41,7 @@ function Message({ onNameSubmit }) {
           text: val
         },{
           side: "left",
-          text: "你設定的名稱是「" + val + "」。\n 確定名稱的話請輸入 Yes 開始測驗，更改名稱的話請輸入 No。"
+          text: "你設定的名稱是「" + val + "」。\n 確定名稱的話請點擊 Yes 開始測驗，更改名稱的話請點擊 No。"
         }])
       } else {
         setState("Name")
@@ -120,6 +121,12 @@ function Message({ onNameSubmit }) {
         <div ref={messageEndRef}></div>
       </div>
 
+
+      <p className={` ${ state === "Confirm" ? "opacity-100" : "-translate-y-12 opacity-0" } relative duration-700 w-full h-[6%]  mb-2 space-x-3 flex justify-center`}>
+        <button onClick={() => handleSendText("yes")} className="w-[20%] h-[90%] rounded-full bg-green-400">Yes</button>
+        <button onClick={() => handleSendText("no")} className="w-[20%] h-[90%] rounded-full bg-gray-500 text-gray-200">No</button>
+      </p>
+
       <p className="h-[7%] w-full flex items-start space-x-1 relative ">
         <p className='w-[1%]' />
         <img alt="Camera" className="hover:h-[68%] hover:-translate-y-1 duration-300 h-[63%] mt-1" src={Camera} />
@@ -138,8 +145,9 @@ function Message({ onNameSubmit }) {
             }} 
             placeholder="請在此輸入你的暱稱" 
             maxLength={12}
-            className='duration-500 pl-4 text-sm w-[72%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
+            className='duration-500 pl-4 text-sm w-[65%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
         />
+        <img onClick={() => handleSendText(text)} alt="Button" className="h-[60%] mt-1" src={Button} /> 
       </p>
     </div>
   );

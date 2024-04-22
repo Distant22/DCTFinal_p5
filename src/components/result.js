@@ -8,6 +8,7 @@ import Appstore from '../page_item/appstore.png'
 import Messagecount from '../page_item/messagecount.png'
 import Banner from '../page_item/banner.png'
 import Arrow from '../page_item/arrow.png'
+import Button from '../page_item/button.png'
 import {ref, getDownloadURL} from "firebase/storage";
 import { imgDB, txtDB } from "../firebase";
 import { getDoc, addDoc, collection, doc, updateDoc } from "firebase/firestore";
@@ -48,6 +49,8 @@ function Result({ userProp, onRestart }) {
 
     if ( val.toLowerCase() === "restart" ) {
       onRestart("init")
+    } else if ( val.toLowerCase() === "result" ) {
+      onRestart("result_image")
     }
   }
 
@@ -174,7 +177,7 @@ function Result({ userProp, onRestart }) {
           </div>    
         </div>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>可以輸入 Restart 再玩一次。</div>    
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>可以點擊 Restart 再玩一次，或是點擊 Result 取得結果圖片。</div>    
         </div>
         <audio ref={audioRef} autoPlay loop>
           <source src={getAudioSource()} type="audio/wav" />
@@ -186,6 +189,11 @@ function Result({ userProp, onRestart }) {
             </div>
         ))}
         <div ref={messageEndRef}></div>
+      </p>
+
+      <p className={` ${ imageUrl !== "" ? "opacity-100" : "-translate-y-12 opacity-0" } relative duration-700 w-full h-[6%]  mb-2 space-x-3 flex justify-center`}>
+        <button onClick={() => handleSendText("Restart")} className="w-[25%] h-[90%] rounded-full bg-green-400">Restart</button>
+        <button onClick={() => handleSendText("Result")} className="w-[25%] h-[90%] rounded-full bg-gray-500 text-gray-200">Result</button>
       </p>
 
       <p className="h-[7%] w-full flex items-start space-x-1 ">
@@ -206,8 +214,9 @@ function Result({ userProp, onRestart }) {
             }} 
             placeholder="輸入..." 
             maxLength={12}
-            className='duration-500 pl-4 text-sm w-[72%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
+            className='duration-500 pl-4 text-sm w-[65%] h-[76%] rounded-full border-2 border-gray-200 focus:border-gray-400 focus:outline-none focus:ring-0 text-black placeholder-gray-400'
         />
+        <img onClick={() => handleSendText(text)} alt="Button" className="h-[60%] mt-1" src={Button} /> 
       </p>
     </div>
   );

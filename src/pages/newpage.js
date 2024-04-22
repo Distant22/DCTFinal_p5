@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NameInput from '../components/name';
 import Message from '../components/message';
 import Result from '../components/result';
+import ResultImage from '../components/result_image';
 import Main from './main';
 
 function NewPage() {
@@ -59,6 +60,7 @@ function NewPage() {
         { page === "message" ? <Message onNameSubmit={handleUserName} /> : <></>}
         { page === "main" ? <Main nameProp={user.name} setResult={handleResult} /> : <></>}
         { page === "result" ? <Result userProp={user} onRestart={handleChangePage} /> : <></>}
+        { page === "result_image" ? <ResultImage /> : <></>}
     </div>
   );
 }
