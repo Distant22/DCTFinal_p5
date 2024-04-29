@@ -9,6 +9,8 @@ function NewPage() {
 
   const [page, setPage] = useState("init")
 
+  const [color, setColor] = useState('black_and_white');
+
   // 設定初始名稱
   const [user, setUser] = useState({
     name: "",
@@ -20,13 +22,33 @@ function NewPage() {
 
   const handleChangePage = (val) => {
     setPage(val)
-    setUser({...user,
-      name: "",
-      imgType: null,
-      score: 0,
-      uploadTime: null,
-      chosenOption: [],
-    })
+    if(val === "init") {
+      console.log("Reset Everything")
+      setUser({...user,
+        name: "",
+        imgType: null,
+        score: 0,
+        uploadTime: null,
+        chosenOption: [],
+      })
+    } else {
+      if ( user.imgType !== null ){
+        let len = user.imgType.length
+        if ( user.imgType.substring(len - 4, len) === "blue" ) {
+          console.log("Set color to blue")
+          setColor("blue")
+        } else if ( user.imgType.substring(len - 4, len) === "pink") {
+          console.log("Set color to pink")
+          setColor("pink")
+        } else if ( user.imgType.substring(len - 5, len) === "brown"){
+          console.log("Set color to brown")
+          setColor("brown")
+        } else if ( user.imgType.substring(len - 5, len) === "green"){
+          console.log("Set color to green")
+          setColor("green")
+        }
+      }
+    }
   };
 
   const handleUserName = async (val) => {
@@ -60,7 +82,7 @@ function NewPage() {
         { page === "message" ? <Message onNameSubmit={handleUserName} /> : <></>}
         { page === "main" ? <Main nameProp={user.name} setResult={handleResult} /> : <></>}
         { page === "result" ? <Result userProp={user} onRestart={handleChangePage} /> : <></>}
-        { page === "result_image" ? <ResultImage /> : <></>}
+        { page === "result_image" ? <ResultImage userProp={user} colorProp={color} /> : <></>}
     </div>
   );
 }
