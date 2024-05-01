@@ -77,7 +77,7 @@ function NewPage() {
   }
 
   return (
-    <div className="flex font-serif duration-500 h-[100dvh] ">
+    <div className="flex font-sans font-bold duration-500 h-[100dvh] ">
         { page === "init" ? <NameInput onChangePage={handleChangePage} /> : <></>}
         { page === "message" ? <Message onNameSubmit={handleUserName} /> : <></>}
         { page === "main" ? <Main nameProp={user.name} setResult={handleResult} /> : <></>}

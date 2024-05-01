@@ -10,8 +10,6 @@ const firebaseConfig = {
   messagingSenderId: "585958748133", // process.env.messagingSenderId
   appId: "1:585958748133:web:4e15391409cfa63a3b090c" // process.env.appId
 };
-console.log(process.env.storageBucket);
-console.log(process.env.messagingSenderId);
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const imgDB = getStorage(app)

@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: { 
-        "serif": ['Noto Serif TC'] 
+        "serif": ['Noto Sans TC'] 
       },
     },
   },
