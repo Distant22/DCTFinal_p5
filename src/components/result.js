@@ -169,7 +169,7 @@ function Result({ userProp, onRestart }) {
       {/* 下排版 */}
       <p className='h-[73%] w-[90%] flex flex-col overflow-y-scroll my-2'>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>{ userProp.name } 你好，這是代表你的建築物：</div>    
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>登愣！測驗結果出來了！記得開聲音聽聽專屬於你的音樂喔～你是：</div>    
         </div>
         <div className="chat chat-start">
           <div className='chat-bubble duration-300 bg-gray-200 text-gray-800 object-contain'>
@@ -177,7 +177,7 @@ function Result({ userProp, onRestart }) {
           </div>    
         </div>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>可以點擊 Restart 再玩一次，或是點擊 Result 取得結果圖片。</div>    
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>Restart -> 重新開始，Result -> 看結果</div>    
         </div>
         <audio ref={audioRef} autoPlay loop>
           <source src={getAudioSource()} type="audio/wav" />
@@ -192,8 +192,8 @@ function Result({ userProp, onRestart }) {
       </p>
 
       <p className={` ${ imageUrl !== "" ? "opacity-100" : "-translate-y-12 opacity-0" } relative duration-700 w-full h-[6%]  mb-2 space-x-3 flex justify-center`}>
-        <button onClick={() => handleSendText("Restart")} className="w-[25%] h-[90%] rounded-full bg-green-400">Restart</button>
-        <button onClick={() => handleSendText("Result")} className="w-[25%] h-[90%] rounded-full bg-gray-500 text-gray-200">Result</button>
+        <button onClick={() => handleSendText("Restart")} className="w-[25%] h-[90%] rounded-full bg-gray-500 text-gray-200">Restart</button>
+        <button onClick={() => handleSendText("Result")} className="w-[25%] h-[90%] rounded-full bg-green-400 ">Result</button>
       </p>
 
       <p className="h-[7%] w-full flex items-start space-x-1 ">

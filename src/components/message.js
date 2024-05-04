@@ -41,8 +41,12 @@ function Message({ onNameSubmit }) {
           text: val
         },{
           side: "left",
-          text: "你設定的名稱是「" + val + "」。\n 確定名稱的話請點擊 Yes 開始測驗，更改名稱的話請點擊 No。"
+          text: "哈囉「" + val + "」，讓我們一起探索網路生態城吧～"
+        },{
+          side: "left",
+          text: "( 下方按鈕：進入測驗、重新命名 )"
         }])
+
       } else {
         setState("Name")
         setMessage([...message, {
@@ -67,7 +71,7 @@ function Message({ onNameSubmit }) {
         setState("Name")
         setMessage([...message, {
           side: "left",
-          text: "請輸入你的暱稱。"
+          text: "幫我重新輸入一遍暱稱～"
         }])
       }
     }
@@ -111,7 +115,7 @@ function Message({ onNameSubmit }) {
       {/* 下排版 */}
       <div className='h-[73%] w-[90%] flex flex-col overflow-y-scroll my-2'>
         <div className="chat chat-start">
-          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>請輸入你的暱稱</div>    
+          <div className='chat-bubble duration-300 bg-gray-200 text-gray-800'>嗨嗨在嗎？你的暱稱是什麼呀？</div>    
         </div>
         {message.map((item, index) => (
             <div key={index} className={`chat ${ item.side === "right" ? "chat-end" : "chat-start"}`}>
