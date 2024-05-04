@@ -42,9 +42,6 @@ function Message({ onNameSubmit }) {
         },{
           side: "left",
           text: "哈囉「" + val + "」，讓我們一起探索網路生態城吧～"
-        },{
-          side: "left",
-          text: "( 下方按鈕：進入測驗、重新命名 )"
         }])
 
       } else {
@@ -60,14 +57,14 @@ function Message({ onNameSubmit }) {
     }
     
     if ( val !== "" && state === "Confirm" ) {
-      if ( val.toLowerCase() === "yes" ) {
+      if ( val.toLowerCase() === "進入測驗" ) {
         const sleep = ms => new Promise(
           r => setTimeout(r, ms)
         );
         await sleep(500)
         setFade(true)
         onNameSubmit(name)
-      } else if ( val.toLowerCase() === "no" ) {
+      } else if ( val.toLowerCase() === "重新命名" ) {
         setState("Name")
         setMessage([...message, {
           side: "left",
@@ -127,8 +124,8 @@ function Message({ onNameSubmit }) {
 
 
       <p className={` ${ state === "Confirm" ? "opacity-100" : "-translate-y-12 opacity-0" } relative duration-700 w-full h-[6%]  mb-2 space-x-3 flex justify-center`}>
-        <button onClick={() => handleSendText("yes")} className="w-[20%] h-[90%] rounded-full bg-green-400">Yes</button>
-        <button onClick={() => handleSendText("no")} className="w-[20%] h-[90%] rounded-full bg-gray-500 text-gray-200">No</button>
+        <button onClick={() => handleSendText("進入測驗")} className="w-[30%] h-[90%] rounded-full bg-green-400">進入測驗</button>
+        <button onClick={() => handleSendText("重新命名")} className="w-[30%] h-[90%] rounded-full bg-gray-500 text-gray-200">重新命名</button>
       </p>
 
       <p className="h-[7%] w-full flex items-start space-x-1 relative ">
