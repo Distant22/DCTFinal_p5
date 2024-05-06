@@ -30,7 +30,7 @@ function Collection() {
 
         const fetchResults = async () => {
             const querySnapshot = await getDocs(
-                query(collection(txtDB, "users"), orderBy("uploadTime", "desc"), limit(60))
+                query(collection(txtDB, "users"), orderBy("uploadTime", "desc"), limit(48))
             );
             const cities = [];
             const username = [];
