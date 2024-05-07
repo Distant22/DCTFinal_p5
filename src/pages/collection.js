@@ -186,7 +186,7 @@ function Collection() {
     return (
         <div className="items-center justify-center flex bg-blue-50 h-screen w-screen overflow-y-hidden"> 
             {result ? (
-                <div className="flex items-center justify-center relative z-10" onClick={handleAudioPlayback}>
+                <div className="flex items-center justify-center relative z-10 w-screen -translate-y-28" onClick={handleAudioPlayback}>
                     <ReactP5Wrapper sketch={sketch} />
                     <audio ref={audioRef} loop>
                         <source src={getAudioSource()} type="audio/wav" />
