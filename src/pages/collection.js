@@ -25,14 +25,14 @@ function Collection() {
     const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
     const allAudioName = ['hopeless','sad','collapse','suicide','depression','mild','satisfy','yes','sunny','cheer','happy'];
     
-    useEffect(() => {
+    // useEffect(() => {
 
-        const interval = setInterval(() => {
-            window.location.reload();
-        }, 3000000); // 30 seconds in milliseconds
+    //     const interval = setInterval(() => {
+    //         window.location.reload();
+    //     }, 3000000); // 30 seconds in milliseconds
     
-        return () => clearInterval(interval);
-      }, []);
+    //     return () => clearInterval(interval);
+    //   }, []);
 
     useEffect(() => {
 

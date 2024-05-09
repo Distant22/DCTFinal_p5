@@ -8,14 +8,14 @@ function Collection() {
     const [music, setMusic] = useState("");
     const [cities, setCities] = useState([])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const interval = setInterval(() => {
-            window.location.reload();
-        }, 3000000); 
+    //     const interval = setInterval(() => {
+    //         window.location.reload();
+    //     }, 3000000); 
     
-        return () => clearInterval(interval);
-      }, []);
+    //     return () => clearInterval(interval);
+    //   }, []);
 
     useEffect(() => {
 
