@@ -12,7 +12,7 @@ function Collection() {
 
         const interval = setInterval(() => {
             window.location.reload();
-        }, 1000000); 
+        }, 300000); 
     
         return () => clearInterval(interval);
       }, []);
