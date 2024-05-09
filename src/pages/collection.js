@@ -25,7 +25,15 @@ function Collection() {
     const allAudio = [hopelessAudio, sadAudio, collapseAudio, suicideAudio, depressionAudio, mildAudio, satisfyAudio, yesAudio, sunnyAudio, cheerAudio, happyAudio];
     const allAudioName = ['hopeless','sad','collapse','suicide','depression','mild','satisfy','yes','sunny','cheer','happy'];
     
+    useEffect(() => {
+
+        const interval = setInterval(() => {
+            window.location.reload();
+        }, 30000); // 30 seconds in milliseconds
     
+        return () => clearInterval(interval);
+      }, []);
+
     useEffect(() => {
 
         const fetchResults = async () => {
@@ -194,8 +202,8 @@ function Collection() {
                     </audio> 
                 </div>
             ) : (
-                <div className="flex items-center justify-center relative z-10">
-                    載入測試頁面...
+                <div className="flex items-center justify-center relative z-10 font-bold text-gray-600">
+                   {/* 正在更新網路生態城，請稍待片刻...  */}
                 </div>
             )}
         </div>
