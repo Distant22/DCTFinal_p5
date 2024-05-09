@@ -100,15 +100,14 @@ function Collection() {
         <div className="items-center justify-center flex flex-col bg-blue-50 h-screen w-screen overflow-y-hidden"> 
             {result ? (
                 <>
-                <p className="font-bold justify-center flex py-4 my-4 text-xl text-gray-200 w-[38%] rounded-xl bg-slate-600">網路生態城 - 結果統計</p>
-                <div className="font-bold flex flex-col items-center text-xl justify-center relative z-10 w-[38%] h-[68%] p-4 rounded-xl bg-gray-300 space-y-1">
+                <p className="font-bold justify-center flex py-4 my-4 text-sm lg:text-xl text-gray-200 w-[60%] lg:w-[38%] rounded-xl bg-slate-600">網路生態城 - 結果統計</p>
+                <div className="font-bold flex flex-col items-center text-xs lg:text-xl justify-start relative z-10 w-[60%] lg:w-[38%] h-max p-6 rounded-xl bg-gray-300 space-y-1">
                 我們一共搜集到了 {count} 筆建築物! <br />
                 目前播放的音樂是 {music} <br />
                 <br />
                 {cities.map(city => (
-                  <div key={Object.keys(city)[0]} className="w-full grid grid-cols-8 text-lg ">
-                    <p className="col-span-2"></p>
-                    <p className="col-span-2">{Object.values(city)[1]}</p>
+                  <div key={Object.keys(city)[0]} className="w-full grid grid-cols-4 lg:grid-cols-8 text-xs lg:text-lg ">
+                    <p className="col-span-2 lg:col-start-3">{Object.values(city)[1]}</p>
                     <p className="col-span-1 flex justify-center items-center">{Object.values(city)[2]}</p>
                     <p className="col-span-1">個</p>
                   </div>
