@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, limit, query, getDocs, orderBy } from "firebase/firestore";
-import { imgDB, txtDB } from "../firebase";
-import { ref } from "firebase/storage";
+import { txtDB } from "../firebase";
 
 function Collection() {
     const [result, setResult] = useState(false);
@@ -13,7 +12,7 @@ function Collection() {
 
         const interval = setInterval(() => {
             window.location.reload();
-        }, 30000); 
+        }, 1000000); 
     
         return () => clearInterval(interval);
       }, []);

@@ -29,7 +29,7 @@ function Collection() {
 
         const interval = setInterval(() => {
             window.location.reload();
-        }, 30000); // 30 seconds in milliseconds
+        }, 1000000); // 30 seconds in milliseconds
     
         return () => clearInterval(interval);
       }, []);
